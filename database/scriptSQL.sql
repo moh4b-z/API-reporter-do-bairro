@@ -1,6 +1,6 @@
-CREATE DATABASE db_controle_jogos_bb;
+CREATE DATABASE db_controle_bairro;
 
-use db_controle_jogos_bb;
+use db_controle_bairro;
 
 -- Tabela de Usuários
 CREATE TABLE IF NOT EXISTS tbl_usuario (
