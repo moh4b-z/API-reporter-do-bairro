@@ -38,7 +38,7 @@ app.use(bodyParser.json())
 const routesMain = require('./src/routes/MainRoutes')
 
 // Definição das rotas
-app.use("/v1/reporter-do-bairro", routesMain)
+app.use("/v1/bairro-news", routesMain)
 
 
 const port = process.env.PORT || 8080

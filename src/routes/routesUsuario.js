@@ -3,7 +3,7 @@ const router = express.Router()
 const controllerUsuario = require('../controller/usuario/controllerUsuario')
 
 router.post(
-    '/',
+    '',
     controllerUsuario.postUsuario
 )
 router.delete(
@@ -19,7 +19,7 @@ router.put(
     controllerUsuario.putUsuario
 )
 router.get(
-    '/',
+    '',
     controllerUsuario.getSearchAllUsuario
 )
 router.get(
