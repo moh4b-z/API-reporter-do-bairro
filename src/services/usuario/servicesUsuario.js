@@ -3,9 +3,6 @@ const CORRECTION = require("../../utils/inputCheck")
 const TableCORRECTION = require("../../utils/tablesCheck")
 const encryptionFunction = require("../../utils/encryptionFunction")
 
-const servicesSexo = require("../sexo/servicesSexo")
-const servicesPaises = require("../paises/servicesPaises")
-
 const usuarioDAO = require("../../model/DAO/usuario")
 
 async function inserirUsuario(Usuario, contentType) {
