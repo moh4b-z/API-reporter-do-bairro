@@ -19,7 +19,7 @@ async function insertUsuario(Usuario){
                                             '${Usuario.senha_hash}',
                                             '${Usuario.email}',
                                             '${Usuario.biografia}',
-                                            '${Usuario.data_de_nascimento}',
+                                            '${Usuario.data_nascimento}',
                                             '${Usuario.nome}',
                                             '${Usuario.foto_perfil}'
                                         )`
@@ -50,7 +50,7 @@ async function updateUsuario(Usuario){
                                         senha_hash = '${Usuario.senha_hash}',
                                         email = '${Usuario.email}',
                                         biografia = '${Usuario.biografia}',
-                                        data_nascimento = '${Usuario.data_de_nascimento}',
+                                        data_nascimento = '${Usuario.data_nascimento}',
                                         nome = '${Usuario.nome}',
                                         foto_perfil = '${Usuario.foto_perfil}'           
                                         
