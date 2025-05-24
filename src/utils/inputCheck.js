@@ -95,9 +95,9 @@ function CHECK_VARCHAR(text, letters){
 }
 function CHECK_UNDEFINED(text){
     if(text == undefined){
-        return true
-    }else{
         return false
+    }else{
+        return true
     }
 }
 

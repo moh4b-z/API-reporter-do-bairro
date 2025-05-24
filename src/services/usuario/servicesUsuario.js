@@ -17,24 +17,20 @@ async function inserirUsuario(Usuario, contentType) {
             delete Usuario.senha
             
             if(TableCORRECTION.CHECK_tbl_usuario(Usuario)){
-                if(
-                    servicesSexo.buscarSexo(Usuario.id_sexo) && 
-                    servicesPaises.buscarPaises(Usuario.id_paises)
-                ){
-                    let resultUsuario = await usuarioDAO.insertUsuario(Usuario)
-                    console.log(resultUsuario)
-                    if (resultUsuario){
-                        return {
-                            ...MENSAGE.SUCCESS_CEATED_ITEM,
-                            usuario: resultUsuario
-                        }
-                    }else{
-                        console.log(Usuario)
-                        // console.log(resultUsuario)
-                        return MENSAGE.ERROR_INTERNAL_SERVER_MODEL
+                
+                let resultUsuario = await usuarioDAO.insertUsuario(Usuario)
+                // console.log(resultUsuario)
+                if (resultUsuario){
+                    delete resultUsuario.senha_salt
+                    delete resultUsuario.senha_hash
+                    return {
+                        ...MENSAGE.SUCCESS_CEATED_ITEM,
+                        usuario: resultUsuario
                     }
                 }else{
-                    return MENSAGE.ERROR_NOT_FOUND_FOREIGN_KEY
+                    console.log(Usuario)
+                    // console.log(resultUsuario)
+                    return MENSAGE.ERROR_INTERNAL_SERVER_MODEL
                 }
                 
             }else{
@@ -46,7 +42,7 @@ async function inserirUsuario(Usuario, contentType) {
             return MENSAGE.ERROR_CONTENT_TYPE
         }
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES
     }
     
@@ -126,7 +122,6 @@ async function loginUsuario(loginData, contentType) {
                 usuario.senha_hash
             )
             if (senhaValida) {
-                // remove os dados sensíveis
                 delete usuario.senha_salt
                 delete usuario.senha_hash
 
