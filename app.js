@@ -19,6 +19,7 @@ Versão: 1.0
 ************************************************************************/
 
 const express = require('express')
+const cookieParser = require('cookie-parser');
 const cors = require('cors')
 const bodyParser = require('body-parser')
 

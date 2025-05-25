@@ -5,10 +5,10 @@ use db_controle_bairro;
 -- Tabela: tbl_usuario
 CREATE TABLE tbl_usuario (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100),
+    nome VARCHAR(100) UNIQUE,
     senha_salt VARCHAR(32),
     senha_hash VARCHAR(128),
-    email VARCHAR(250),
+    email VARCHAR(250) UNIQUE,
     data_nascimento DATE,
     foto_perfil VARCHAR(300),
     biografia VARCHAR(300)
