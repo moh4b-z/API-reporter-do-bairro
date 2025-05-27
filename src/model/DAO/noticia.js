@@ -10,15 +10,18 @@ async function insertNoticia(noticia) {
                         endereco,
                         lon,
                         lat,
-                        tbl_usuario_id
-                    ) VALUES (
+                        tbl_usuario_id,
+                        tbl_midia_id
+                    )VALUES (
                         '${noticia.titulo}',
                         '${noticia.conteudo}',
                         '${noticia.endereco}',
                         ${noticia.lon},
                         ${noticia.lat},
-                        ${noticia.tbl_usuario_id}
-                    )`
+                        ${noticia.tbl_usuario_id},
+                        ${noticia.tbl_midia_id}
+)`
+
 
         let result = await prisma.$executeRawUnsafe(sql)
 
@@ -44,7 +47,8 @@ async function updateNoticia(noticia) {
                         endereco = '${noticia.endereco}',
                         lon = ${noticia.lon},
                         lat = ${noticia.lat},
-                        tbl_usuario_id = ${noticia.tbl_usuario_id}
+                        tbl_usuario_id = ${noticia.tbl_usuario_id},
+                        tbl_midia_id = ${noticia.tbl_midia_id}
                     WHERE id = ${noticia.id}`
 
         let result = await prisma.$executeRawUnsafe(sql)

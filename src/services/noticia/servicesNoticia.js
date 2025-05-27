@@ -38,11 +38,14 @@ async function atualizarNoticia(noticia, idNoticia, contentType) {
 
                 if (busca.status_code === 201) {
                     noticia.id = parseInt(idNoticia)
+
                     let result = await noticiaDAO.updateNoticia(noticia)
 
-                    return result ? MENSAGE.SUCCESS_UPDATED_ITEM : MENSAGE.ERROR_INTERNAL_SERVER_MODEL
+                    return result
+                        ? MENSAGE.SUCCESS_UPDATED_ITEM
+                        : MENSAGE.ERROR_INTERNAL_SERVER_MODEL
                 } else {
-                    return busca // erro de not found ou interno
+                    return busca // retorna erro de não encontrado
                 }
             } else {
                 return MENSAGE.ERROR_REQUIRED_FIELDS
@@ -60,9 +63,8 @@ async function excluirNoticia(idNoticia) {
     try {
         if (CORRECTION.CHECK_ID(idNoticia)) {
             let resultBusca = await noticiaDAO.selectByIdNoticia(parseInt(idNoticia))
-            console.log(resultBusca)
 
-            if (resultBusca && resultBusca) {
+            if (resultBusca) {
                 let result = await noticiaDAO.deleteNoticia(parseInt(idNoticia))
                 return result ? MENSAGE.SUCCESS_DELETE_ITEM : MENSAGE.ERROR_NOT_DELETE
             } else {
@@ -76,7 +78,6 @@ async function excluirNoticia(idNoticia) {
         return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES
     }
 }
-
 
 async function listarTodasNoticias() {
     try {
