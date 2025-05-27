@@ -45,8 +45,7 @@ function CHECK_tbl_noticia(noticia) {
 
 function CHECK_tbl_midia(midia) {
     if (
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_img, 45) &&
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_videos, 45)
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_img, 500) 
     ) {
         return true;
     } else {

@@ -5,11 +5,11 @@ const prisma = new PrismaClient()
 async function insertMidia(midia) {
     try {
         let sql = `INSERT INTO tbl_midia (
-                        url_img,
-                        url_videos
+                        url_img
+                        
                     ) VALUES (
-                        '${midia.url_img}',
-                        '${midia.url_videos}'
+                        '${midia.url_img}'
+        
                     )`
 
         let result = await prisma.$executeRawUnsafe(sql)
@@ -31,8 +31,7 @@ async function insertMidia(midia) {
 async function updateMidia(midia) {
     try {
         let sql = `UPDATE tbl_midia SET
-                        url_img = '${midia.url_img}',
-                        url_videos = '${midia.url_videos}'
+                        url_img = '${midia.url_img}'
                     WHERE id = ${midia.id}`
 
         let result = await prisma.$executeRawUnsafe(sql)

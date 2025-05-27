@@ -17,8 +17,7 @@ CREATE TABLE tbl_usuario (
 -- Tabela: tbl_midia
 CREATE TABLE tbl_midia (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    url_img VARCHAR(45),
-    url_videos VARCHAR(45)
+    url_img VARCHAR(45)
 );
 
 -- Tabela: categoria
