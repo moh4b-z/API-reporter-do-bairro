@@ -105,3 +105,6 @@ module.exports = {
     selectAllNoticias,
     selectByIdNoticia
 }
+
+
+//132131313
