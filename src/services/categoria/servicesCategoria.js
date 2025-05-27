@@ -36,6 +36,7 @@ async function atualizarCategoria(categoria, idCategoria, contentType) {
             if (TableCORRECTION.CHECK_tbl_categoria(categoria) && CORRECTION.CHECK_ID(idCategoria)) {
                 let resultCategoria = await buscarCategoria(parseInt(idCategoria));
 
+                
                 if (resultCategoria.status_code == 201) {
                     categoria.id = parseInt(idCategoria);
 
@@ -43,6 +44,7 @@ async function atualizarCategoria(categoria, idCategoria, contentType) {
 
                     return result ? MENSAGE.SUCCESS_UPDATED_ITEM : MENSAGE.ERROR_INTERNAL_SERVER_MODEL;
                 } else if (resultCategoria.status_code == 404) {
+                    console.log(resultCategoria)
                     return MENSAGE.ERROR_NOT_FOUND;
                 } else {
                     return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES;
@@ -64,7 +66,7 @@ async function excluirCategoria(idCategoria) {
             let verification = await categoriaDAO.selectByIdCategoria(parseInt(idCategoria));
 
             if (verification != false || typeof (verification) == 'object') {
-                if (verification.length > 0) {
+                if (verification) {
                     let resultCategoria = await categoriaDAO.deleteCategoria(parseInt(idCategoria));
                     return resultCategoria ? MENSAGE.SUCCESS_DELETE_ITEM : MENSAGE.ERROR_NOT_DELETE;
                 } else {
@@ -108,9 +110,9 @@ async function buscarCategoria(idCategoria) {
     try {
         if (CORRECTION.CHECK_ID(idCategoria)) {
             let resultCategoria = await categoriaDAO.selectByIdCategoria(parseInt(idCategoria));
-
+            console.log(resultCategoria)
             if (resultCategoria != false || typeof (resultCategoria) == 'object') {
-                if (resultCategoria.length > 0) {
+                if (resultCategoria) {
                     return {
                         status: true,
                         status_code: 201,
