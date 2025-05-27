@@ -54,9 +54,23 @@ function CHECK_tbl_noticia(noticia){
 }
 
 
+function CHECK_tbl_midia(midia) {
+    if (
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_img, 45) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_videos, 45)
+    ) {
+        return true
+    } else {
+        return false
+    }
+}
+
+
+
 
 module.exports = {
     CHECK_tbl_usuario,
     CHECK_tbl_noticia,
-    CHECK_tbl_categoria
+    CHECK_tbl_categoria,
+    CHECK_tbl_midia,
 }

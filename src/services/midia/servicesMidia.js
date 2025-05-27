@@ -2,18 +2,18 @@ const MENSAGE = require("../../modulo/config")
 const CORRECTION = require("../../utils/inputCheck")
 const TableCORRECTION = require("../../utils/tablesCheck")
 
-const noticiaDAO = require("../../model/DAO/noticia")
+const midiaDAO = require("../../model/DAO/midia")
 
-async function inserirNoticia(noticia, contentType) {
+async function inserirMidia(midia, contentType) {
     try {
         if (contentType === "application/json") {
-            if (TableCORRECTION.CHECK_tbl_noticia(noticia)) {
-                let result = await noticiaDAO.insertNoticia(noticia)
+            if (TableCORRECTION.CHECK_tbl_midia(midia)) {
+                const result = await midiaDAO.insertMidia(midia)
 
                 if (result) {
                     return {
                         ...MENSAGE.SUCCESS_CEATED_ITEM,
-                        noticia: result
+                        midia: result
                     }
                 } else {
                     return MENSAGE.ERROR_INTERNAL_SERVER_MODEL
@@ -30,19 +30,19 @@ async function inserirNoticia(noticia, contentType) {
     }
 }
 
-async function atualizarNoticia(noticia, idNoticia, contentType) {
+async function atualizarMidia(midia, idMidia, contentType) {
     try {
         if (contentType === "application/json") {
-            if (TableCORRECTION.CHECK_tbl_noticia(noticia) && CORRECTION.CHECK_ID(idNoticia)) {
-                const busca = await buscarNoticia(idNoticia)
+            if (TableCORRECTION.CHECK_tbl_midia(midia) && CORRECTION.CHECK_ID(idMidia)) {
+                const busca = await buscarMidia(idMidia)
 
                 if (busca.status_code === 201) {
-                    noticia.id = parseInt(idNoticia)
-                    let result = await noticiaDAO.updateNoticia(noticia)
+                    midia.id = parseInt(idMidia)
+                    const result = await midiaDAO.updateMidia(midia)
 
                     return result ? MENSAGE.SUCCESS_UPDATED_ITEM : MENSAGE.ERROR_INTERNAL_SERVER_MODEL
                 } else {
-                    return busca // erro de not found ou interno
+                    return busca
                 }
             } else {
                 return MENSAGE.ERROR_REQUIRED_FIELDS
@@ -56,14 +56,13 @@ async function atualizarNoticia(noticia, idNoticia, contentType) {
     }
 }
 
-async function excluirNoticia(idNoticia) {
+async function excluirMidia(idMidia) {
     try {
-        if (CORRECTION.CHECK_ID(idNoticia)) {
-            let resultBusca = await noticiaDAO.selectByIdNoticia(parseInt(idNoticia))
-            console.log(resultBusca)
+        if (CORRECTION.CHECK_ID(idMidia)) {
+            const resultBusca = await midiaDAO.selectByIdMidia(parseInt(idMidia))
 
-            if (resultBusca && resultBusca) {
-                let result = await noticiaDAO.deleteNoticia(parseInt(idNoticia))
+            if (resultBusca) {
+                const result = await midiaDAO.deleteMidia(parseInt(idMidia))
                 return result ? MENSAGE.SUCCESS_DELETE_ITEM : MENSAGE.ERROR_NOT_DELETE
             } else {
                 return MENSAGE.ERROR_NOT_FOUND
@@ -77,17 +76,16 @@ async function excluirNoticia(idNoticia) {
     }
 }
 
-
-async function listarTodasNoticias() {
+async function listarTodasMidias() {
     try {
-        let result = await noticiaDAO.selectAllNoticias()
+        const result = await midiaDAO.selectAllMidias()
 
         if (result && result.length > 0) {
             return {
                 status: true,
                 status_code: 201,
                 items: result.length,
-                noticias: result
+                midias: result
             }
         } else {
             return MENSAGE.ERROR_NOT_FOUND
@@ -98,16 +96,16 @@ async function listarTodasNoticias() {
     }
 }
 
-async function buscarNoticia(idNoticia) {
+async function buscarMidia(idMidia) {
     try {
-        if (CORRECTION.CHECK_ID(idNoticia)) {
-            let result = await noticiaDAO.selectByIdNoticia(parseInt(idNoticia))
+        if (CORRECTION.CHECK_ID(idMidia)) {
+            const result = await midiaDAO.selectByIdMidia(parseInt(idMidia))
 
             if (result) {
                 return {
                     status: true,
                     status_code: 201,
-                    noticia: result
+                    midia: result
                 }
             } else {
                 return MENSAGE.ERROR_NOT_FOUND
@@ -122,9 +120,9 @@ async function buscarNoticia(idNoticia) {
 }
 
 module.exports = {
-    inserirNoticia,
-    excluirNoticia,
-    listarTodasNoticias,
-    buscarNoticia,
-    atualizarNoticia
+    inserirMidia,
+    atualizarMidia,
+    excluirMidia,
+    listarTodasMidias,
+    buscarMidia
 }
