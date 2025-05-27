@@ -7,6 +7,6 @@ const routesCategoria = require('./routesCategoria')// Importa as rotas da tabel
 
 router.use('/user', routesUsuario)
 router.use('/noticia', routesNoticia) // Adiciona a rota da tabela noticia
-router.use('./categoria', routesCategoria) // Adiciona a rota da tabela categoria
+router.use('/categoria', routesCategoria) // Adiciona a rota da tabela categoria
 
 module.exports = router

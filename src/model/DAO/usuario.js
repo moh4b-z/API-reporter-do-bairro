@@ -35,7 +35,9 @@ async function insertUsuario(Usuario){
             let Criado = await prisma.$queryRawUnsafe(sqlSelect)
             return Criado[0] // Retorna o objeto completo
         } else {
+            console.log(result)
             return false
+            
         }
     } catch (error) {
         console.log(error)
