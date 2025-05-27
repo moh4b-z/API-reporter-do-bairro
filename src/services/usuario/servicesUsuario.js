@@ -104,6 +104,8 @@ async function atualizarUsuario(Usuario, idUsuario, contentType) {
 
 async function loginUsuario(loginData, contentType) {
     try {
+        // console.log(loginData);
+        
         if (contentType == "application/json") {
             const { email, senha } = loginData
 
