@@ -19,6 +19,24 @@ function CHECK_tbl_usuario(usuario){
 
 
 
+function CHECK_tbl_noticia(noticia){ 
+    if(
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(noticia.titulo, 100) &&
+        CORRECTION.CHECK_UNDEFINED(noticia.conteudo) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(noticia.endereco, 300) &&
+        CORRECTION.CHECK_DECIMAL_NOT_NULL(noticia.lon)&&
+        CORRECTION.CHECK_DECIMAL_NOT_NULL(noticia.lat)&&
+        CORRECTION.CHECK_ID(noticia.tbl_usuario_id)
+    ){
+        return true
+    }else{
+        return false
+    }
+}
+
+
+
 module.exports = {
-    CHECK_tbl_usuario
+    CHECK_tbl_usuario,
+    CHECK_tbl_noticia
 }

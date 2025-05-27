@@ -19,7 +19,7 @@ Versão: 1.0
 ************************************************************************/
 
 const express = require('express')
-const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
@@ -34,13 +34,11 @@ app.use((request, response, next) => {
 app.use(cors()) 
 app.use(bodyParser.json()) 
 
-// Importação de rotas
-
+// Importação da rota principal
 const routesMain = require('./src/routes/MainRoutes')
 
 // Definição das rotas
 app.use("/v1/bairro-news", routesMain)
-
 
 const port = process.env.PORT || 8080
 app.listen(port, function(){
