@@ -57,17 +57,19 @@ async function atualizarUsuario(Usuario, idUsuario, contentType) {
             // console.log((Usuario))
             // console.log((idUsuario))
             
+            const { senha_salt, senha_hash } = encryptionFunction.hashPassword(Usuario.senha)
+            Usuario.senha_salt = senha_salt
+            Usuario.senha_hash = senha_hash
+            delete Usuario.senha
+
             
             if(TableCORRECTION.CHECK_tbl_usuario(Usuario) && CORRECTION.CHECK_ID(idUsuario)){
 
                 let resultUsuario = await buscarUsuario(parseInt(idUsuario))
                 
+                
                 if(resultUsuario.status_code == 201){
-                    if(
-                        servicesSexo.buscarSexo(Usuario.id_sexo) && 
-                        servicesPaises.buscarPaises(Usuario.id_paises)
-                    ){
-                        Usuario.id = parseInt(idUsuario)
+                    Usuario.id = parseInt(idUsuario)
 
                         let result = await usuarioDAO.updateUsuario(Usuario)
                         // console.log(result)
@@ -79,9 +81,6 @@ async function atualizarUsuario(Usuario, idUsuario, contentType) {
                             
                             return MENSAGE.ERROR_INTERNAL_SERVER_MODEL
                         }
-                    }else{
-                        return MENSAGE.ERROR_NOT_FOUND_FOREIGN_KEY
-                    }
                 }else if(resultUsuario.status_code == 404){
 
                     return MENSAGE.ERROR_NOT_FOUND

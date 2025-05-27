@@ -60,8 +60,9 @@ async function excluirNoticia(idNoticia) {
     try {
         if (CORRECTION.CHECK_ID(idNoticia)) {
             let resultBusca = await noticiaDAO.selectByIdNoticia(parseInt(idNoticia))
+            console.log(resultBusca)
 
-            if (resultBusca && resultBusca.length > 0) {
+            if (resultBusca && resultBusca) {
                 let result = await noticiaDAO.deleteNoticia(parseInt(idNoticia))
                 return result ? MENSAGE.SUCCESS_DELETE_ITEM : MENSAGE.ERROR_NOT_DELETE
             } else {
@@ -75,6 +76,7 @@ async function excluirNoticia(idNoticia) {
         return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES
     }
 }
+
 
 async function listarTodasNoticias() {
     try {
@@ -121,7 +123,6 @@ async function buscarNoticia(idNoticia) {
 
 module.exports = {
     inserirNoticia,
-    atualizarNoticia,
     excluirNoticia,
     listarTodasNoticias,
     buscarNoticia
