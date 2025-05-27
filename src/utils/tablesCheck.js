@@ -17,6 +17,17 @@ function CHECK_tbl_usuario(usuario){
     }
 }
 
+function CHECK_tbl_categoria(categoria) {
+    if (
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(categoria.nome, 100) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(categoria.descricao, 200) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(categoria.sigla, 5)
+    ) {
+        return true
+    } else {
+        return false
+    }
+}
 
 
 function CHECK_tbl_noticia(noticia){ 
@@ -38,5 +49,6 @@ function CHECK_tbl_noticia(noticia){
 
 module.exports = {
     CHECK_tbl_usuario,
-    CHECK_tbl_noticia
+    CHECK_tbl_noticia,
+    CHECK_tbl_categoria
 }
