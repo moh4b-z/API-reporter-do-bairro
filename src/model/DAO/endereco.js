@@ -1,0 +1,112 @@
+
+const { PrismaClient } = require('@prisma/client');
+//Instancia da classe do prisma client, para gera um objeto
+const prisma = new PrismaClient();
+
+// Inserir um novo endereço
+async function insertEndereco(endereco) {
+    try {
+        const novoEndereco = await prisma.tbl_endereco.create({
+            data: {
+                cep: endereco.cep,
+                logradouro: endereco.logradouro,
+                complemento: endereco.complemento,
+                bairro: endereco.bairro,
+                localidade: endereco.localidade,
+                uf: endereco.uf,
+                ibge: endereco.ibge,
+                gia: endereco.gia,
+                siafi: endereco.siafi,
+                display_name: endereco.display_name,
+                lat: endereco.lat,
+                lon: endereco.lon
+            }
+        });
+        return novoEndereco; // retorna o objeto completo
+    } catch (error) {
+        console.error("Erro ao inserir endereço:", error);
+        return null;
+    }
+}
+
+// Atualizar um endereço existente
+async function updateEndereco(endereco) {
+    try {
+        const updatedEndereco = await prisma.tbl_endereco.update({
+            where: {
+                id: endereco.id
+            },
+            data: {
+                cep: endereco.cep,
+                logradouro: endereco.logradouro,
+                complemento: endereco.complemento,
+                bairro: endereco.bairro,
+                localidade: endereco.localidade,
+                uf: endereco.uf,
+                ibge: endereco.ibge,
+                gia: endereco.gia,
+                siafi: endereco.siafi,
+                display_name: endereco.display_name,
+                lat: endereco.lat,
+                lon: endereco.lon
+            }
+        });
+        return updatedEndereco ? true : false;
+    } catch (error) {
+        console.error("Erro ao atualizar endereço:", error);
+        return false;
+    }
+}
+
+// Deletar um endereço
+async function deleteEndereco(idEndereco) {
+    try {
+        const result = await prisma.tbl_endereco.delete({
+            where: {
+                id: idEndereco
+            }
+        });
+        return result ? true : false;
+    } catch (error) {
+        console.error("Erro ao deletar endereço:", error);
+        return false;
+    }
+}
+
+// Selecionar todos os endereços
+async function selectAllEnderecos() {
+    try {
+        const result = await prisma.tbl_endereco.findMany({
+            orderBy: {
+                id: 'desc'
+            }
+        });
+        return result.length > 0 ? result : false;
+    } catch (error) {
+        console.error("Erro ao selecionar todos os endereços:", error);
+        return false;
+    }
+}
+
+// Filtrar endereço pelo ID
+async function selectByIdEndereco(idEndereco) {
+    try {
+        const result = await prisma.tbl_endereco.findUnique({
+            where: {
+                id: idEndereco
+            }
+        });
+        return result ? result : false;
+    } catch (error) {
+        console.error("Erro ao selecionar endereço por ID:", error);
+        return false;
+    }
+}
+
+module.exports = {
+    insertEndereco,
+    updateEndereco,
+    deleteEndereco,
+    selectAllEnderecos,
+    selectByIdEndereco
+};
