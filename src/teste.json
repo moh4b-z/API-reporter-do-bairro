@@ -1,0 +1,24 @@
+{
+    "titulo": "Nova Descoberta Arqueológica em Osasco",
+    "conteudo": "Arqueólogos encontram vestígios de uma antiga civilização durante escavações na região central de Osasco, SP. A descoberta promete mudar a compreensão da história local.",
+    "tbl_usuario_id": 1, 
+    "endereco": {
+      "cep": "06056-010",
+      "logradouro": "Avenida Novo Osasco",
+      "complemento": "lado ímpar, próximo ao parque",
+      "bairro": "Bussocaba",
+      "localidade": "Osasco",
+      "uf": "SP",
+      "ibge": "3534401",
+      "gia": "4923",
+      "siafi": "6789",
+      "display_name": "Avenida Novo Osasco, Bussocaba, Osasco, Região Imediata de São Paulo, Região Metropolitana de São Paulo, Região Geográfica Intermediária de São Paulo, São Paulo, Região Sudeste, 06056-010, Brasil",
+      "lat": -23.5655141,
+      "lon": -46.7828897
+    },
+    "urls_midia": [
+      "https://example.com/imagens/noticia1_foto1.jpg",
+      "https://example.com/videos/noticia1_video1.mp4",
+      "https://example.com/imagens/noticia1_foto2.png"
+    ]
+}
