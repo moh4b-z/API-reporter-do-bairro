@@ -31,8 +31,18 @@ CREATE TABLE tbl_categoria (
 -- Tabela: tbl_endereco
 CREATE TABLE tbl_endereco (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    cep INT NOT NULL,
-    logradouro VARCHAR(200) NOT NULL
+    cep VARCHAR(10) NOT NULL, -- Alterado para VARCHAR para armazenar CEP com hífen
+    logradouro VARCHAR(200) NOT NULL,
+    complemento VARCHAR(200),
+    bairro VARCHAR(100),
+    localidade VARCHAR(100),
+    uf VARCHAR(2),
+    ibge VARCHAR(10),
+    gia VARCHAR(10),
+    siafi VARCHAR(10),
+    display_name VARCHAR(500), -- Para armazenar a string completa do display_name
+    lat DECIMAL(10,7),
+    lon DECIMAL(11,7)
 );
 
 -- Tabela: tbl_noticia
@@ -40,14 +50,11 @@ CREATE TABLE tbl_noticia (
     id INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(100),
     conteudo TEXT,
-    lon DECIMAL(11,7),
-    lat DECIMAL(10,7),
     tbl_usuario_id INT,
     tbl_endereco_id INT,
     FOREIGN KEY (tbl_usuario_id) REFERENCES tbl_usuario(id),
     FOREIGN KEY (tbl_endereco_id) REFERENCES tbl_endereco(id)
 );
-
 
 -- Tabela: tbl_midia_noticia (tabela associativa entre notícia e mídia)
 CREATE TABLE tbl_midia_noticia (
@@ -66,6 +73,3 @@ CREATE TABLE tbl_noticia_categoria (
     FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id),
     FOREIGN KEY (tbl_categoria_id) REFERENCES tbl_categoria(id)
 );
-
-
-
