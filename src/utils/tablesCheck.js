@@ -32,16 +32,16 @@ function CHECK_tbl_endereco(endereco) {
     if (
         CORRECTION.CHECK_VARCHAR_NOT_NULL(endereco.cep, 10) && // CEP é VARCHAR(10)
         CORRECTION.CHECK_VARCHAR_NOT_NULL(endereco.logradouro, 200) &&
-        CORRECTION.CHECK_UNDEFINED(endereco.complemento) && // Pode ser nulo
-        CORRECTION.CHECK_UNDEFINED(endereco.bairro) && // Pode ser nulo
-        CORRECTION.CHECK_UNDEFINED(endereco.localidade) && // Pode ser nulo
-        CORRECTION.CHECK_UNDEFINED(endereco.uf) && // Pode ser nulo
-        CORRECTION.CHECK_UNDEFINED(endereco.ibge) && // Pode ser nulo
-        CORRECTION.CHECK_UNDEFINED(endereco.gia) && // Pode ser nulo
-        CORRECTION.CHECK_UNDEFINED(endereco.siafi) && // Pode ser nulo
-        CORRECTION.CHECK_UNDEFINED(endereco.display_name) && // Pode ser nulo
-        CORRECTION.CHECK_DECIMAL_NOT_NULL(endereco.lat) &&
-        CORRECTION.CHECK_DECIMAL_NOT_NULL(endereco.lon)
+        CORRECTION.CHECK_VARCHAR(endereco.complemento, 200) && // Pode ser nulo
+        CORRECTION.CHECK_VARCHAR(endereco.bairro, 100) && // Pode ser nulo
+        CORRECTION.CHECK_VARCHAR(endereco.localidade, 100) && // Pode ser nulo
+        CORRECTION.CHECK_VARCHAR(endereco.uf, 2) && // Pode ser nulo
+        CORRECTION.CHECK_VARCHAR(endereco.ibge, 10) && // Pode ser nulo
+        CORRECTION.CHECK_VARCHAR(endereco.gia, 10) && // Pode ser nulo
+        CORRECTION.CHECK_VARCHAR(endereco.siafi, 10) && // Pode ser nulo
+        CORRECTION.CHECK_VARCHAR(endereco.display_name, 500) && // Pode ser nulo
+        CORRECTION.CHECK_DECIMAL_NOT_NULL(endereco.lat, 10, 7) &&
+        CORRECTION.CHECK_DECIMAL_NOT_NULL(endereco.lon, 11, 7)
     ) {
         return true;
     } else {
@@ -65,7 +65,7 @@ function CHECK_tbl_noticia(noticia) {
 
 function CHECK_tbl_midia(midia) {
     if (
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_img, 45) // Corrigido o tamanho máximo para 45
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_img, 500) // Corrigido o tamanho máximo para 45
     ) {
         return true;
     } else {
