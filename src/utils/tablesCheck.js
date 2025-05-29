@@ -30,13 +30,13 @@ function CHECK_tbl_categoria(categoria) {
 
 function CHECK_tbl_noticia(noticia) {
     if (
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(noticia.titulo, 100) &&
-        CORRECTION.CHECK_UNDEFINED(noticia.conteudo) &&
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(noticia.endereco, 300) &&
-        CORRECTION.CHECK_DECIMAL_NOT_NULL(noticia.lon) &&
-        CORRECTION.CHECK_DECIMAL_NOT_NULL(noticia.lat) &&
-        CORRECTION.CHECK_ID(noticia.tbl_usuario_id) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(noticia.titulo, 100)   &&
+        CORRECTION.CHECK_UNDEFINED(noticia.conteudo)             &&
+        CORRECTION.CHECK_DECIMAL_NOT_NULL(noticia.lon)           &&
+        CORRECTION.CHECK_DECIMAL_NOT_NULL(noticia.lat)           &&
+        CORRECTION.CHECK_ID(noticia.tbl_usuario_id)              &&
         CORRECTION.CHECK_ID(noticia.tbl_midia_id)
+        
     ) {
         return true;
     } else {
@@ -65,10 +65,29 @@ function CHECK_tbl_noticia_categoria(noticiaCategoria) {
     }
 }
 
+
+function CHECK_tbl_endereco(endereco) {
+    if (
+
+        CORRECTION.CHECK_UNDEFINED(endereco.cep) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(endereco.logradouro, 200)   
+        
+        
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+
 module.exports = {
     CHECK_tbl_usuario,
     CHECK_tbl_noticia,
     CHECK_tbl_categoria,
     CHECK_tbl_midia,
-    CHECK_tbl_noticia_categoria
+    CHECK_tbl_noticia_categoria,
+    CHECK_tbl_endereco
 };

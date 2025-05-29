@@ -1,19 +1,18 @@
 const MENSAGE = require("../../modulo/config")
 const CORRECTION = require("../../utils/inputCheck")
 const TableCORRECTION = require("../../utils/tablesCheck")
+const enderecoDAO = require("../../model/DAO/endereco")
 
-const noticiaDAO = require("../../model/DAO/noticia")
-
-async function inserirNoticia(noticia, contentType) {
+async function inserirEndereco(endereco, contentType) {
     try {
-        if (contentType === "application/json") {
-            if (TableCORRECTION.CHECK_tbl_noticia(noticia)) {
-                let result = await noticiaDAO.insertNoticia(noticia)
-                console.log(result)
+        if (contentType == "application/json") {
+            if (TableCORRECTION.CHECK_tbl_endereco(endereco)) {
+                let result = await enderecoDAO.insertEndereco(endereco)
+
                 if (result) {
                     return {
                         ...MENSAGE.SUCCESS_CEATED_ITEM,
-                        noticia: result
+                        endereco: result
                     }
                 } else {
                     return MENSAGE.ERROR_INTERNAL_SERVER_MODEL
@@ -30,22 +29,18 @@ async function inserirNoticia(noticia, contentType) {
     }
 }
 
-async function atualizarNoticia(noticia, idNoticia, contentType) {
+async function atualizarEndereco(endereco, idEndereco, contentType) {
     try {
-        if (contentType === "application/json") {
-            if (TableCORRECTION.CHECK_tbl_noticia(noticia) && CORRECTION.CHECK_ID(idNoticia)) {
-                const busca = await buscarNoticia(idNoticia)
+        if (contentType == "application/json") {
+            if (TableCORRECTION.CHECK_tbl_endereco(endereco) && CORRECTION.CHECK_ID(idEndereco)) {
+                let enderecoExistente = await buscarEndereco(idEndereco)
 
-                if (busca.status_code === 201) {
-                    noticia.id = parseInt(idNoticia)
-
-                    let result = await noticiaDAO.updateNoticia(noticia)
-
-                    return result
-                        ? MENSAGE.SUCCESS_UPDATED_ITEM
-                        : MENSAGE.ERROR_INTERNAL_SERVER_MODEL
+                if (enderecoExistente.status_code === 201) {
+                    endereco.id = parseInt(idEndereco)
+                    let result = await enderecoDAO.updateEndereco(endereco)
+                    return result ? MENSAGE.SUCCESS_UPDATED_ITEM : MENSAGE.ERROR_INTERNAL_SERVER_MODEL
                 } else {
-                    return busca // retorna erro de não encontrado
+                    return MENSAGE.ERROR_NOT_FOUND
                 }
             } else {
                 return MENSAGE.ERROR_REQUIRED_FIELDS
@@ -59,13 +54,13 @@ async function atualizarNoticia(noticia, idNoticia, contentType) {
     }
 }
 
-async function excluirNoticia(idNoticia) {
+async function excluirEndereco(idEndereco) {
     try {
-        if (CORRECTION.CHECK_ID(idNoticia)) {
-            let resultBusca = await noticiaDAO.selectByIdNoticia(parseInt(idNoticia))
+        if (CORRECTION.CHECK_ID(idEndereco)) {
+            let enderecoExistente = await enderecoDAO.selectByIdEndereco(parseInt(idEndereco))
 
-            if (resultBusca) {
-                let result = await noticiaDAO.deleteNoticia(parseInt(idNoticia))
+            if (enderecoExistente) {
+                let result = await enderecoDAO.deleteEndereco(parseInt(idEndereco))
                 return result ? MENSAGE.SUCCESS_DELETE_ITEM : MENSAGE.ERROR_NOT_DELETE
             } else {
                 return MENSAGE.ERROR_NOT_FOUND
@@ -74,41 +69,39 @@ async function excluirNoticia(idNoticia) {
             return MENSAGE.ERROR_REQUIRED_FIELDS
         }
     } catch (error) {
-        console.log(error)
         return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES
     }
 }
 
-async function listarTodasNoticias() {
+async function listarTodosEnderecos() {
     try {
-        let result = await noticiaDAO.selectAllNoticias()
+        let result = await enderecoDAO.selectAllEndereco()
 
         if (result && result.length > 0) {
             return {
                 status: true,
                 status_code: 201,
                 items: result.length,
-                noticias: result
+                enderecos: result
             }
         } else {
             return MENSAGE.ERROR_NOT_FOUND
         }
     } catch (error) {
-        console.log(error)
         return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES
     }
 }
 
-async function buscarNoticia(idNoticia) {
+async function buscarEndereco(idEndereco) {
     try {
-        if (CORRECTION.CHECK_ID(idNoticia)) {
-            let result = await noticiaDAO.selectByIdNoticia(parseInt(idNoticia))
+        if (CORRECTION.CHECK_ID(idEndereco)) {
+            let result = await enderecoDAO.selectByIdEndereco(parseInt(idEndereco))
 
             if (result) {
                 return {
                     status: true,
                     status_code: 201,
-                    noticia: result
+                    endereco: result
                 }
             } else {
                 return MENSAGE.ERROR_NOT_FOUND
@@ -117,15 +110,14 @@ async function buscarNoticia(idNoticia) {
             return MENSAGE.ERROR_REQUIRED_FIELDS
         }
     } catch (error) {
-        console.log(error)
         return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES
     }
 }
 
 module.exports = {
-    inserirNoticia,
-    excluirNoticia,
-    listarTodasNoticias,
-    buscarNoticia,
-    atualizarNoticia
+    inserirEndereco,
+    atualizarEndereco,
+    excluirEndereco,
+    listarTodosEnderecos,
+    buscarEndereco
 }

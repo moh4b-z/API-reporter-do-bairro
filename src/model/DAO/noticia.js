@@ -2,32 +2,41 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 // Inserir notícia
+// Inserir notícia
+// Inserir notícia (corrigido)
 async function insertNoticia(noticia) {
     try {
         let sql = `INSERT INTO tbl_noticia (
                         titulo,
                         conteudo,
-                        endereco,
                         lon,
                         lat,
                         tbl_usuario_id,
                         tbl_midia_id
-                    )VALUES (
+                    ) VALUES (
                         '${noticia.titulo}',
                         '${noticia.conteudo}',
-                        '${noticia.endereco}',
-                        ${noticia.lon},
-                        ${noticia.lat},
-                        ${noticia.tbl_usuario_id},
-                        ${noticia.tbl_midia_id}
-)`
-
+                        '${noticia.lon}',
+                        '${noticia.lat}',
+                        '${noticia.tbl_usuario_id}',
+                        '${noticia.tbl_midia_id}'
+                    )`
 
         let result = await prisma.$executeRawUnsafe(sql)
 
         if (result) {
             let sqlSelect = `SELECT * FROM tbl_noticia WHERE tbl_usuario_id = ${noticia.tbl_usuario_id} ORDER BY id DESC LIMIT 1`
             let noticiaCriada = await prisma.$queryRawUnsafe(sqlSelect)
+            const noticiaId = noticiaCriada[0].id
+
+            // Inserir mídias associadas (caso existam)
+            if (noticia.tbl_midias && noticia.tbl_midias.length > 0) {
+                for (let midia of noticia.tbl_midias) {
+                    let sqlMidia = `INSERT INTO tbl_midia (url_img, tbl_noticia_id) VALUES ('${midia.url_img}', ${noticiaId})`
+                    await prisma.$executeRawUnsafe(sqlMidia)
+                }
+            }
+
             return noticiaCriada[0]
         } else {
             return false
@@ -38,13 +47,13 @@ async function insertNoticia(noticia) {
     }
 }
 
+
 // Atualizar notícia
 async function updateNoticia(noticia) {
     try {
         let sql = `UPDATE tbl_noticia SET
                         titulo = '${noticia.titulo}',
                         conteudo = '${noticia.conteudo}',
-                        endereco = '${noticia.endereco}',
                         lon = ${noticia.lon},
                         lat = ${noticia.lat},
                         tbl_usuario_id = ${noticia.tbl_usuario_id},

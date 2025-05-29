@@ -128,3 +128,4 @@ module.exports = {
     listarTodasNoticiasCategorias,
     buscarNoticiaCategoria
 };
+    
