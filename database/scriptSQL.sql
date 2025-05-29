@@ -33,12 +33,14 @@ CREATE TABLE tbl_noticia (
     id INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(100),
     conteudo TEXT,
-    endereco VARCHAR(300),
     lon DECIMAL(11,7),
     lat DECIMAL(10,7),
     tbl_usuario_id INT,
-    FOREIGN KEY (tbl_usuario_id) REFERENCES tbl_usuario(id)
+    tbl_endereco_id INT,
+    FOREIGN KEY (tbl_usuario_id) REFERENCES tbl_usuario(id),
+    FOREIGN KEY (tbl_endereco_id) REFERENCES tbl_endereco(id)
 );
+
 
 -- Tabela: tbl_midia_noticia (tabela associativa entre notícia e mídia)
 CREATE TABLE tbl_midia_noticia (
@@ -56,4 +58,11 @@ CREATE TABLE tbl_noticia_categoria (
     categoria_id INT,
     FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id),
     FOREIGN KEY (categoria_id) REFERENCES categoria(id)
+);
+
+
+CREATE TABLE tbl_endereco (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    cep INT NOT NULL,
+    logradouro VARCHAR(200) NOT NULL
 );
