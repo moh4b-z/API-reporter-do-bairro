@@ -21,11 +21,18 @@ CREATE TABLE tbl_midia (
 );
 
 -- Tabela: categoria
-CREATE TABLE categoria (
+CREATE TABLE tbl_categoria (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     descricao VARCHAR(200),
     sigla VARCHAR(5)
+);
+
+-- Tabela: tbl_endereco
+CREATE TABLE tbl_endereco (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    cep INT NOT NULL,
+    logradouro VARCHAR(200) NOT NULL
 );
 
 -- Tabela: tbl_noticia
@@ -55,14 +62,10 @@ CREATE TABLE tbl_midia_noticia (
 CREATE TABLE tbl_noticia_categoria (
     id INT PRIMARY KEY AUTO_INCREMENT,
     tbl_noticia_id INT,
-    categoria_id INT,
+    tbl_categoria_id INT,
     FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id),
-    FOREIGN KEY (categoria_id) REFERENCES categoria(id)
+    FOREIGN KEY (tbl_categoria_id) REFERENCES tbl_categoria(id)
 );
 
 
-CREATE TABLE tbl_endereco (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    cep INT NOT NULL,
-    logradouro VARCHAR(200) NOT NULL
-);
+
