@@ -7,6 +7,8 @@ const usuarioDAO = require("../../model/DAO/usuario")
 
 async function inserirUsuario(Usuario, contentType) {
     try {
+        // console.log(Usuario);
+        
         if(contentType == "application/json"){
             // console.log(Usuario)
             // 

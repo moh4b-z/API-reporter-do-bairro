@@ -1,14 +1,16 @@
 const CORRECTION = require("./inputCheck");
 
 function CHECK_tbl_usuario(usuario) {
+    // console.log(usuario.data_nascimento,    CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.data_nascimento, 10));
+    
     if (
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.senha_salt, 32) &&
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.senha_hash, 128) &&
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.email, 250) && // Corrigido o tamanho máximo para 250
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.email, 250) && 
         CORRECTION.CHECK_UNDEFINED(usuario.biografia) &&
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.data_nascimento, 10) &&
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.nome, 100) && // Corrigido o tamanho máximo para 100
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.foto_perfil, 300) // Corrigido o tamanho máximo para 300
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.nome, 100) && 
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.foto_perfil, 300) 
     ) {
         return true;
     } else {
