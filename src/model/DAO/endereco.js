@@ -76,12 +76,9 @@ async function deleteEndereco(idEndereco) {
 // Selecionar todos os endereços
 async function selectAllEnderecos() {
     try {
-        const result = await prisma.tbl_endereco.findMany({
-            orderBy: {
-                id: 'desc'
-            }
-        });
-        return result.length > 0 ? result : false;
+        let sql = 'SELECT * FROM tbl_endereco ORDER BY id DESC'
+        let result = await prisma.$queryRawUnsafe(sql)
+        return result ? result : false
     } catch (error) {
         console.error("Erro ao selecionar todos os endereços:", error);
         return false;
@@ -91,12 +88,9 @@ async function selectAllEnderecos() {
 // Filtrar endereço pelo ID
 async function selectByIdEndereco(idEndereco) {
     try {
-        const result = await prisma.tbl_endereco.findUnique({
-            where: {
-                id: idEndereco
-            }
-        });
-        return result ? result : false;
+        let sql = `SELECT * FROM tbl_endereco WHERE id = ${idEndereco}`
+        let result = await prisma.$queryRawUnsafe(sql)
+        return result ? result[0] : false
     } catch (error) {
         console.error("Erro ao selecionar endereço por ID:", error);
         return false;

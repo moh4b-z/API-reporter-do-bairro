@@ -1,82 +1,61 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
+
 // Inserir notícia
 async function insertNoticia(noticia) {
     try {
-        let sql = `INSERT INTO tbl_noticia (
-                        titulo,
-                        conteudo,
-                        endereco,
-                        lon,
-                        lat,
-                        tbl_usuario_id,
-                        tbl_midia_id
-                    )VALUES (
-                        '${noticia.titulo}',
-                        '${noticia.conteudo}',
-                        '${noticia.endereco}',
-                        ${noticia.lon},
-                        ${noticia.lat},
-                        ${noticia.tbl_usuario_id},
-                        ${noticia.tbl_midia_id}
-)`
-
-
-        let result = await prisma.$executeRawUnsafe(sql)
-
-        if (result) {
-            let sqlSelect = `SELECT * FROM tbl_noticia WHERE tbl_usuario_id = ${noticia.tbl_usuario_id} ORDER BY id DESC LIMIT 1`
-            let noticiaCriada = await prisma.$queryRawUnsafe(sqlSelect)
-            return noticiaCriada[0]
-        } else {
-            return false
-        }
+        const novaNoticia = await prisma.tbl_noticia.create({
+            data: {
+                titulo: noticia.titulo,
+                conteudo: noticia.conteudo,
+                tbl_usuario_id: noticia.tbl_usuario_id,
+                tbl_endereco_id: noticia.tbl_endereco_id // Agora usa a FK para tbl_endereco
+            }
+        });
+        return novaNoticia;
     } catch (error) {
-        console.log(error)
-        return false
+        console.error("Erro ao inserir notícia:", error);
+        return false;
     }
 }
 
 // Atualizar notícia
 async function updateNoticia(noticia) {
     try {
-        let sql = `UPDATE tbl_noticia SET
-                        titulo = '${noticia.titulo}',
-                        conteudo = '${noticia.conteudo}',
-                        endereco = '${noticia.endereco}',
-                        lon = ${noticia.lon},
-                        lat = ${noticia.lat},
-                        tbl_usuario_id = ${noticia.tbl_usuario_id},
-                        tbl_midia_id = ${noticia.tbl_midia_id}
-                    WHERE id = ${noticia.id}`
-
-        let result = await prisma.$executeRawUnsafe(sql)
-
-        if (result) {
-            let sqlSelect = `SELECT * FROM tbl_noticia WHERE id = ${noticia.id}`
-            let noticiaAtualizada = await prisma.$queryRawUnsafe(sqlSelect)
-            return noticiaAtualizada[0]
-        } else {
-            return false
-        }
+        const noticiaAtualizada = await prisma.tbl_noticia.update({
+            where: {
+                id: noticia.id
+            },
+            data: {
+                titulo: noticia.titulo,
+                conteudo: noticia.conteudo,
+                tbl_usuario_id: noticia.tbl_usuario_id,
+                tbl_endereco_id: noticia.tbl_endereco_id // Agora usa a FK para tbl_endereco
+            }
+        });
+        return noticiaAtualizada;
     } catch (error) {
-        console.log(error)
-        return false
+        console.error("Erro ao atualizar notícia:", error);
+        return false;
     }
 }
 
 // Deletar notícia
 async function deleteNoticia(idNoticia) {
     try {
-        let sql = `DELETE FROM tbl_noticia WHERE id = ${idNoticia}`
-        let result = await prisma.$executeRawUnsafe(sql)
-        return result ? true : false
+        const result = await prisma.tbl_noticia.delete({
+            where: {
+                id: idNoticia
+            }
+        });
+        return result ? true : false;
     } catch (error) {
-        console.log(error)
-        return false
+        console.error("Erro ao deletar notícia:", error);
+        return false;
     }
 }
+
 
 // Buscar todas as notícias
 async function selectAllNoticias() {
