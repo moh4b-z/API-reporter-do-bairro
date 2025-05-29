@@ -13,6 +13,6 @@ router.use('/user', routesUsuario)
 router.use('/noticia', routesNoticia)
 router.use('/categoria', routesCategoria)
 router.use('/midia', routesMidia)
-router.use('/enderoco', routesEndereco)
+router.use('/endereco', routesEndereco)
 
 module.exports = router
