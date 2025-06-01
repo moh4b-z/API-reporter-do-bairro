@@ -67,8 +67,14 @@ function CHECK_tbl_noticia(noticia) {
 }
 
 function CHECK_tbl_midia(midia) {
+    // console.log(
+    //     CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_midia, 500) ,
+    //     CORRECTION.CHECK_ID(midia.tbl_noticia_id) 
+    // );
+    
     if (
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_img, 500) // Corrigido o tamanho máximo para 45
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_midia, 500) &&
+        CORRECTION.CHECK_ID(midia.tbl_noticia_id) 
     ) {
         return true;
     } else {
@@ -77,9 +83,14 @@ function CHECK_tbl_midia(midia) {
 }
 
 function CHECK_tbl_noticia_categoria(noticiaCategoria) {
+    // console.log(
+    //     CORRECTION.CHECK_ID(noticiaCategoria.tbl_noticia_id),
+    //     CORRECTION.CHECK_ID(noticiaCategoria.tbl_categoria_id) 
+    // )
+    
     if (
         CORRECTION.CHECK_ID(noticiaCategoria.tbl_noticia_id) &&
-        CORRECTION.CHECK_ID(noticiaCategoria.tbl_categoria_id) // Corrigido para tbl_categoria_id
+        CORRECTION.CHECK_ID(noticiaCategoria.tbl_categoria_id) 
     ) {
         return true;
     } else {

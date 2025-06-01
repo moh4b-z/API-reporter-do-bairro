@@ -1,107 +1,86 @@
-const MENSAGE = require("../../../modulo/config");
-const CORRECTION = require("../../../utils/inputCheck");
-const TableCORRECTION = require("../../../utils/tablesCheck");
+const MENSAGE = require("../../../modulo/config")
+const CORRECTION = require("../../../utils/inputCheck")
+const TableCORRECTION = require("../../../utils/tablesCheck")
 
-const noticiaDAO = require("../../../model/DAO/noticia");
-const enderecoDAO = require("../../../model/DAO/endereco");
-const midiaDAO = require("../../../model/DAO/midia");
-const noticiaCategoriaDAO = require("../../../model/DAO/noticiaCategoria");
-const categoriaDAO = require("../../../model/DAO/categoria");
+const noticiaDAO = require("../../../model/DAO/noticia")
+const enderecoDAO = require("../../../model/DAO/endereco")
+const midiaDAO = require("../../../model/DAO/midia")
+const noticiaCategoriaDAO = require("../../../model/DAO/noticiaCategoria")
+const categoriaDAO = require("../../../model/DAO/categoria")
+const buscarDadosViaCep = require("../../viaCEP/buscarDadosViaCep")
+const servicesEndereco = require("../endereco/servicesEndereco")
+const servicesMidia = require("../midia/servicesMidia")
+const servicesNoticiaCategoria = require("../noticia_categoria/servicesNoticiaCategoria")
 
 async function inserirNoticia(noticia, contentType) {
     try {
         if (contentType === "application/json") {
-            const { titulo, conteudo, tbl_usuario_id, endereco, urls_midia, categorias_id } = noticia;
-
-            // Validação básica para campos essenciais da notícia
-            if (!titulo || !conteudo || !tbl_usuario_id || !endereco || !urls_midia || urls_midia.length === 0 || !categorias_id || categorias_id.length === 0) {
-                return MENSAGE.ERROR_REQUIRED_FIELDS;
-            }
-
-            // 1. Inserir o endereço
-            if (!TableCORRECTION.CHECK_tbl_endereco(endereco)) {
-                return { ...MENSAGE.ERROR_REQUIRED_FIELDS, message: "Dados de endereço incompletos ou inválidos." };
-            }
-            const novoEndereco = await enderecoDAO.insertEndereco(endereco);
-
-            if (!novoEndereco) {
-                return MENSAGE.ERROR_INTERNAL_SERVER_MODEL;
-            }
-
-            // 2. Inserir a notícia com a FK do endereço
-            const noticiaParaInserir = {
-                titulo: titulo,
-                conteudo: conteudo,
-                tbl_usuario_id: tbl_usuario_id,
-                tbl_endereco_id: novoEndereco.id
-            };
-
-            const resultNoticia = await noticiaDAO.insertNoticia(noticiaParaInserir);
-
-            if (!resultNoticia) {
-                await enderecoDAO.deleteEndereco(novoEndereco.id); // Reverte a inserção do endereço
-                return MENSAGE.ERROR_INTERNAL_SERVER_MODEL;
-            }
-
-            // 3. Inserir as mídias associadas à notícia
-            const midiasInseridas = [];
-            for (const url of urls_midia) {
-                const midiaParaInserir = {
-                    url: url,
-                    tbl_noticia_id: resultNoticia.id
-                };
-                if (!TableCORRECTION.CHECK_tbl_midia(midiaParaInserir)) {
-                    console.warn(`URL de mídia inválida: ${url}`);
-                    continue;
+            if(noticia.endereco){
+                console.log(noticia);
+                
+                let resultCEP = await buscarDadosViaCep.buscarDadosViaCep(noticia.endereco.cep)
+                
+                
+                delete noticia.endereco.cep
+                noticia.endereco = {
+                    ...noticia.endereco,
+                    ...resultCEP
                 }
-                const novaMidia = await midiaDAO.insertMidia(midiaParaInserir);
-                if (novaMidia) {
-                    midiasInseridas.push(novaMidia);
-                } else {
-                    console.error(`Falha ao inserir mídia com URL: ${url}`);
+
+                // console.log("-------");
+                // console.log(noticia.endereco);
+                // console.log("-------");
+                let resultEnderoco = await servicesEndereco.inserirEndereco(noticia.endereco, contentType)
+
+                if(resultEnderoco.endereco){
+                    noticia.tbl_endereco_id = resultEnderoco.endereco.id
+                    if (TableCORRECTION.CHECK_tbl_noticia(noticia)) {
+                        const result = await noticiaDAO.insertNoticia(noticia)
+                        if (result) {
+                            result.urls_midia = []
+                            for(let midia of noticia.urls_midia){
+                                let midias = await servicesMidia.inserirMidia({
+                                    url_midia: midia,
+                                    tbl_noticia_id: result.id
+                                }, contentType)
+                                result.urls_midia.push(midias)
+                            }
+                            result.categorias = []
+                            for(let id_categoria of noticia.categorias){
+                                let categoria = await servicesNoticiaCategoria.inserirNoticiaCategoria({
+                                    tbl_categoria_id: id_categoria,
+                                    tbl_noticia_id: result.id
+                                }, contentType)
+                                result.categorias.push(categoria)
+                            }
+                            return {
+                                ...MENSAGE.SUCCESS_CEATED_ITEM,
+                                noticia: result
+                            };
+                        } else {
+                            return MENSAGE.ERROR_INTERNAL_SERVER_MODEL
+                        }
+                    } else {
+                        return MENSAGE.ERROR_REQUIRED_FIELDS
+                    }
+                }else{
+                    console.log("na parte de endereços");
+                    return resultEnderoco
                 }
+            }else {
+                console.log("na parte de endereços");                
+                return MENSAGE.ERROR_REQUIRED_FIELDS
             }
-
-            // 4. Inserir as associações de categorias para a notícia
-            const categoriasAssociadas = [];
-            for (const categoria_id of categorias_id) {
-                const associacaoParaInserir = {
-                    tbl_noticia_id: resultNoticia.id,
-                    tbl_categoria_id: categoria_id
-                };
-                // Assume que CHECK_tbl_noticia_categoria verifica os IDs
-                if (!TableCORRECTION.CHECK_tbl_noticia_categoria(associacaoParaInserir)) {
-                    console.warn(`ID de categoria inválido: ${categoria_id}`);
-                    continue;
-                }
-                const novaAssociacao = await noticiaCategoriaDAO.inserirNoticiaCategoria(associacaoParaInserir, contentType); // Passa o contentType
-                if (novaAssociacao && novaAssociacao.status_code === 201) { // Verifica o status_code do retorno do service de categoria
-                    categoriasAssociadas.push(novaAssociacao.noticia_categoria);
-                } else {
-                    console.error(`Falha ao associar categoria ${categoria_id} à notícia ${resultNoticia.id}`);
-                }
-            }
-
-            const noticiaCompleta = {
-                ...resultNoticia,
-                endereco: novoEndereco,
-                midias: midiasInseridas,
-                categorias: categoriasAssociadas
-            };
-
-            return {
-                ...MENSAGE.SUCCESS_CEATED_ITEM,
-                noticia: noticiaCompleta
-            };
-
+            
         } else {
-            return MENSAGE.ERROR_CONTENT_TYPE;
+            return MENSAGE.ERROR_CONTENT_TYPE
         }
     } catch (error) {
-        console.error("Erro ao inserir notícia:", error);
-        return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES;
+        console.error("Erro ao inserir noticia:", error)
+        return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES
     }
 }
+
 
 async function atualizarNoticia(noticia, idNoticia, contentType) {
     try {

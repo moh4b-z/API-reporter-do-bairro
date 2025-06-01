@@ -9,7 +9,7 @@ async function insertNoticia(noticia) {
             data: {
                 titulo: noticia.titulo,
                 conteudo: noticia.conteudo,
-                data_postagem: noticia.data_postagem,
+                data_postagem: new Date(noticia.data_postagem),
                 tbl_usuario_id: noticia.tbl_usuario_id,
                 tbl_endereco_id: noticia.tbl_endereco_id // Agora usa a FK para tbl_endereco
             }

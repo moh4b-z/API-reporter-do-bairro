@@ -6,10 +6,10 @@ async function insertNoticiaCategoria(noticiaCategoria) {
     try {
         let sql = `INSERT INTO tbl_noticia_categoria (
                         tbl_noticia_id,
-                        categoria_id
+                        tbl_categoria_id
                     ) VALUES (
                         ${noticiaCategoria.tbl_noticia_id},
-                        ${noticiaCategoria.categoria_id}
+                        ${noticiaCategoria.tbl_categoria_id}
                     )`;
 
         let result = await prisma.$executeRawUnsafe(sql);
@@ -32,7 +32,7 @@ async function updateNoticiaCategoria(noticiaCategoria) {
     try {
         let sql = `UPDATE tbl_noticia_categoria SET
                         tbl_noticia_id = ${noticiaCategoria.tbl_noticia_id},
-                        categoria_id = ${noticiaCategoria.categoria_id}
+                        tbl_categoria_id = ${noticiaCategoria.tbl_categoria_id}
                     WHERE id = ${noticiaCategoria.id}`;
 
         let result = await prisma.$executeRawUnsafe(sql);
@@ -67,22 +67,22 @@ async function selectAllNoticiaCategoria() {
     try {
         let sql = 'SELECT * FROM tbl_noticia_categoria ORDER BY id DESC';
         let result = await prisma.$queryRawUnsafe(sql);
-        return result ? result : false;
+        return result ? result : false
     } catch (error) {
-        console.log(error);
-        return false;
+        console.log(error)
+        return false
     }
 }
 
 // Buscar associação por ID
 async function selectByIdNoticiaCategoria(id) {
     try {
-        let sql = `SELECT * FROM tbl_noticia_categoria WHERE id = ${id}`;
-        let result = await prisma.$queryRawUnsafe(sql);
-        return result ? result[0] : false;
+        let sql = `SELECT * FROM tbl_noticia_categoria WHERE id = ${id}`
+        let result = await prisma.$queryRawUnsafe(sql)
+        return result ? result : false
     } catch (error) {
-        console.log(error);
-        return false;
+        console.log(error)
+        return false
     }
 }
 // Buscar associação por ID

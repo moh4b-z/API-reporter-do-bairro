@@ -1,4 +1,4 @@
-export default async  function buscarDadosViaCep(cep){
+async function buscarDadosViaCep(cep){
   try {
     const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
     if (!response.ok) throw new Error('Erro ao buscar CEP')
@@ -13,4 +13,8 @@ export default async  function buscarDadosViaCep(cep){
     console.error('Erro ao buscar dados do ViaCEP:', error)
     return null
   }
+}
+
+module.exports = {
+    buscarDadosViaCep
 }

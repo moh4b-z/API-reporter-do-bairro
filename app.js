@@ -26,9 +26,9 @@ const bodyParser = require('body-parser')
 const app = express()
 
 app.use((request, response, next) => {
-    response.header('Access-Control-Allow-Origin', '*')
-    response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-    next()
+    response.header('Access-Control-Allow-Origin', '*')
+    response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+    next()
 })
 
 app.use(cors()) 

@@ -6,6 +6,8 @@ const prisma = new PrismaClient();
 // Inserir um novo endereço
 async function insertEndereco(endereco) {
     try {
+        // console.log(endereco);
+        // console.log("endereco");
         const novoEndereco = await prisma.tbl_endereco.create({
             data: {
                 cep: endereco.cep,
@@ -21,11 +23,11 @@ async function insertEndereco(endereco) {
                 lat: endereco.lat,
                 lon: endereco.lon
             }
-        });
-        return novoEndereco; // retorna o objeto completo
+        })
+        return novoEndereco
     } catch (error) {
         console.error("Erro ao inserir endereço:", error);
-        return null;
+        return null
     }
 }
 

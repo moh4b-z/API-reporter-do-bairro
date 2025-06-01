@@ -7,15 +7,17 @@ const enderecoDAO = require("../../../model/DAO/endereco"); // Importa o DAO de 
 async function inserirEndereco(endereco, contentType) {
     try {
         if (contentType === "application/json") {
-            // Verifica os dados do endereço usando a função de correção específica para tbl_endereco
             if (TableCORRECTION.CHECK_tbl_endereco(endereco)) {
-                const result = await enderecoDAO.insertEndereco(endereco);
+                // console.log(endereco);
+                // console.log("endereco");
+                
+                const result = await enderecoDAO.insertEndereco(endereco)
 
                 if (result) {
                     return {
                         ...MENSAGE.SUCCESS_CEATED_ITEM,
                         endereco: result
-                    };
+                    }
                 } else {
                     return MENSAGE.ERROR_INTERNAL_SERVER_MODEL;
                 }
