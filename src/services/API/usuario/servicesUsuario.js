@@ -1,9 +1,9 @@
-const MENSAGE = require("../../modulo/config")
-const CORRECTION = require("../../utils/inputCheck")
-const TableCORRECTION = require("../../utils/tablesCheck")
-const encryptionFunction = require("../../utils/encryptionFunction")
+const MENSAGE = require("../../../modulo/config")
+const CORRECTION = require("../../../utils/inputCheck")
+const TableCORRECTION = require("../../../utils/tablesCheck")
+const encryptionFunction = require("../../../utils/encryptionFunction")
 
-const usuarioDAO = require("../../model/DAO/usuario")
+const usuarioDAO = require("../../../model/DAO/usuario")
 
 async function inserirUsuario(Usuario, contentType) {
     try {

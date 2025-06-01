@@ -1,8 +1,8 @@
-const MENSAGE = require("../../modulo/config");
-const CORRECTION = require("../../utils/inputCheck");
-const TableCORRECTION = require("../../utils/tablesCheck");
+const MENSAGE = require("../../../modulo/config");
+const CORRECTION = require("../../../utils/inputCheck");
+const TableCORRECTION = require("../../../utils/tablesCheck");
 
-const categoriaDAO = require("../../model/DAO/categoria");
+const categoriaDAO = require("../../../model/DAO/categoria");
 
 async function inserirCategoria(categoria, contentType) {
     try {

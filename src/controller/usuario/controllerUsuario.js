@@ -1,4 +1,4 @@
-const servicesUsuario = require("../../services/usuario/servicesUsuario")
+const servicesUsuario = require("../../services/API/usuario/servicesUsuario")
 
 async function postUsuario (request, response) {
     let contentType = request.headers['content-type']

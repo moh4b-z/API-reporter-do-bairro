@@ -85,11 +85,23 @@ async function selectByIdNoticiaCategoria(id) {
         return false;
     }
 }
+// Buscar associação por ID
+async function selectCategoriasByNoticiaId(id) {
+    try {
+        let sql = `SELECT * FROM tbl_noticia_categoria WHERE tbl_noticia_id = ${id}`;
+        let result = await prisma.$queryRawUnsafe(sql);
+        return result
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
 
 module.exports = {
     insertNoticiaCategoria,
     updateNoticiaCategoria,
     deleteNoticiaCategoria,
     selectAllNoticiaCategoria,
-    selectByIdNoticiaCategoria
+    selectByIdNoticiaCategoria,
+    selectCategoriasByNoticiaId
 };

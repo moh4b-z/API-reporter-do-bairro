@@ -1,8 +1,8 @@
-const MENSAGE = require("../../modulo/config")
-const CORRECTION = require("../../utils/inputCheck")
-const TableCORRECTION = require("../../utils/tablesCheck")
+const MENSAGE = require("../../../modulo/config")
+const CORRECTION = require("../../../utils/inputCheck")
+const TableCORRECTION = require("../../../utils/tablesCheck")
 
-const midiaDAO = require("../../model/DAO/midia")
+const midiaDAO = require("../../../model/DAO/midia")
 
 async function inserirMidia(midia, contentType) {
     try {

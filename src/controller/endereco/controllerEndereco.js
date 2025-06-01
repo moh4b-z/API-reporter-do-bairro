@@ -1,4 +1,4 @@
-const servicesEndereco = require("../../services/endereco/servicesEndereco"); // Importa o arquivo de serviços de endereço
+const servicesEndereco = require("../../services/API/endereco/servicesEndereco"); // Importa o arquivo de serviços de endereço
 
 // POST: Inserir novo endereço
 async function postEndereco(request, response) {

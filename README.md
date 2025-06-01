@@ -38,5 +38,8 @@ Este back-end fornece uma API para permitir que cidadãos registrem e acompanhem
 npm install
 npm install prisma --save
 npm install @prisma/client --save
+npx prisma db pull
+npx prisma generate
+
 
 

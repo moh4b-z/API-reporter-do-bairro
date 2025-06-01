@@ -1,4 +1,4 @@
-const servicesNoticia = require("../../services/noticia/servicesNoticia")
+const servicesNoticia = require("../../services/API/noticia/servicesNoticia")
 
 async function postNoticia(request, response) {
     let contentType = request.headers['content-type']

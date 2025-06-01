@@ -9,9 +9,9 @@ datasource db {
 
 model tbl_categoria {
   id                    Int                     @id @default(autoincrement())
-  nome                  String?                 @db.VarChar(100)
+  nome                  String                  @unique(map: "nome") @db.VarChar(100)
   descricao             String?                 @db.VarChar(200)
-  sigla                 String?                 @db.VarChar(5)
+  sigla                 String?                 @unique(map: "sigla") @db.VarChar(5)
   tbl_noticia_categoria tbl_noticia_categoria[]
 }
 
@@ -26,38 +26,31 @@ model tbl_endereco {
   ibge         String?       @db.VarChar(10)
   gia          String?       @db.VarChar(10)
   siafi        String?       @db.VarChar(10)
-  display_name String?       @db.VarChar(500)
-  lat          Decimal?      @db.Decimal(10, 7)
-  lon          Decimal?      @db.Decimal(11, 7)
+  display_name String        @db.VarChar(600)
+  lat          Decimal       @db.Decimal(10, 7)
+  lon          Decimal       @db.Decimal(11, 7)
   tbl_noticia  tbl_noticia[]
 }
 
 model tbl_midia {
-  id                Int                 @id @default(autoincrement())
-  url_midia         String?             @db.VarChar(500)
-  tbl_midia_noticia tbl_midia_noticia[]
-}
+  id             Int         @id @default(autoincrement())
+  url_midia      String      @db.VarChar(1000)
+  tbl_noticia_id Int
+  tbl_noticia    tbl_noticia @relation(fields: [tbl_noticia_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_midia_ibfk_1")
 
-model tbl_midia_noticia {
-  id             Int          @id @default(autoincrement())
-  tbl_noticia_id Int?
-  tbl_midia_id   Int?
-  tbl_noticia    tbl_noticia? @relation(fields: [tbl_noticia_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_midia_noticia_ibfk_1")
-  tbl_midia      tbl_midia?   @relation(fields: [tbl_midia_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_midia_noticia_ibfk_2")
-
-  @@index([tbl_midia_id], map: "tbl_midia_id")
   @@index([tbl_noticia_id], map: "tbl_noticia_id")
 }
 
 model tbl_noticia {
   id                    Int                     @id @default(autoincrement())
-  titulo                String?                 @db.VarChar(100)
+  titulo                String                  @db.VarChar(100)
   conteudo              String?                 @db.Text
-  tbl_usuario_id        Int?
-  tbl_endereco_id       Int?
-  tbl_midia_noticia     tbl_midia_noticia[]
-  tbl_usuario           tbl_usuario?            @relation(fields: [tbl_usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_noticia_ibfk_1")
-  tbl_endereco          tbl_endereco?           @relation(fields: [tbl_endereco_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_noticia_ibfk_2")
+  data_postagem         DateTime                @db.Date
+  tbl_usuario_id        Int
+  tbl_endereco_id       Int
+  tbl_midia             tbl_midia[]
+  tbl_usuario           tbl_usuario             @relation(fields: [tbl_usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_noticia_ibfk_1")
+  tbl_endereco          tbl_endereco            @relation(fields: [tbl_endereco_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_noticia_ibfk_2")
   tbl_noticia_categoria tbl_noticia_categoria[]
 
   @@index([tbl_endereco_id], map: "tbl_endereco_id")
@@ -65,11 +58,11 @@ model tbl_noticia {
 }
 
 model tbl_noticia_categoria {
-  id               Int            @id @default(autoincrement())
-  tbl_noticia_id   Int?
-  tbl_categoria_id Int?
-  tbl_noticia      tbl_noticia?   @relation(fields: [tbl_noticia_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_noticia_categoria_ibfk_1")
-  tbl_categoria    tbl_categoria? @relation(fields: [tbl_categoria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_noticia_categoria_ibfk_2")
+  id               Int           @id @default(autoincrement())
+  tbl_noticia_id   Int
+  tbl_categoria_id Int
+  tbl_noticia      tbl_noticia   @relation(fields: [tbl_noticia_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_noticia_categoria_ibfk_1")
+  tbl_categoria    tbl_categoria @relation(fields: [tbl_categoria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_noticia_categoria_ibfk_2")
 
   @@index([tbl_categoria_id], map: "tbl_categoria_id")
   @@index([tbl_noticia_id], map: "tbl_noticia_id")
@@ -77,12 +70,12 @@ model tbl_noticia_categoria {
 
 model tbl_usuario {
   id              Int           @id @default(autoincrement())
-  nome            String?       @unique(map: "nome") @db.VarChar(100)
-  senha_salt      String?       @db.VarChar(32)
-  senha_hash      String?       @db.VarChar(128)
-  email           String?       @unique(map: "email") @db.VarChar(250)
+  nome            String        @unique(map: "nome") @db.VarChar(100)
+  senha_salt      String        @db.VarChar(32)
+  senha_hash      String        @db.VarChar(128)
+  email           String        @unique(map: "email") @db.VarChar(250)
   data_nascimento DateTime?     @db.Date
   foto_perfil     String?       @db.VarChar(300)
-  biografia       String?       @db.VarChar(300)
+  biografia       String?       @db.Text
   tbl_noticia     tbl_noticia[]
 }

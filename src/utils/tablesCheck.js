@@ -1,14 +1,14 @@
 const CORRECTION = require("./inputCheck");
 
 function CHECK_tbl_usuario(usuario) {
-    // console.log(usuario.data_nascimento,    CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.data_nascimento, 10));
+    console.log(usuario.data_nascimento,    CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.data_nascimento, 10));
     
     if (
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.senha_salt, 32) &&
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.senha_hash, 128) &&
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.email, 250) && 
         CORRECTION.CHECK_UNDEFINED(usuario.biografia) &&
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.data_nascimento, 10) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.data_nascimento, 24) &&
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.nome, 100) && 
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.foto_perfil, 300) 
     ) {
@@ -32,7 +32,7 @@ function CHECK_tbl_categoria(categoria) {
 
 function CHECK_tbl_endereco(endereco) {
     if (
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(endereco.cep, 10) && // CEP é VARCHAR(10)
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(endereco.cep, 10) && 
         CORRECTION.CHECK_VARCHAR_NOT_NULL(endereco.logradouro, 200) &&
         CORRECTION.CHECK_VARCHAR(endereco.complemento, 200) && // Pode ser nulo
         CORRECTION.CHECK_VARCHAR(endereco.bairro, 100) && // Pode ser nulo
@@ -56,12 +56,13 @@ function CHECK_tbl_noticia(noticia) {
     if (
         CORRECTION.CHECK_VARCHAR_NOT_NULL(noticia.titulo, 100) &&
         CORRECTION.CHECK_UNDEFINED(noticia.conteudo) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(noticia.data_postagem, 24) &&
         CORRECTION.CHECK_ID(noticia.tbl_usuario_id) &&
-        CORRECTION.CHECK_ID(noticia.tbl_endereco_id) // Referência para a tabela tbl_endereco
+        CORRECTION.CHECK_ID(noticia.tbl_endereco_id)
     ) {
-        return true;
+        return true
     } else {
-        return false;
+        return false
     }
 }
 

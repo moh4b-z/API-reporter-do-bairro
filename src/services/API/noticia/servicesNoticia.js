@@ -1,11 +1,12 @@
-const MENSAGE = require("../../modulo/config");
-const CORRECTION = require("../../utils/inputCheck");
-const TableCORRECTION = require("../../utils/tablesCheck");
+const MENSAGE = require("../../../modulo/config");
+const CORRECTION = require("../../../utils/inputCheck");
+const TableCORRECTION = require("../../../utils/tablesCheck");
 
-const noticiaDAO = require("../../model/DAO/noticia");
-const enderecoDAO = require("../../model/DAO/endereco");
-const midiaDAO = require("../../model/DAO/midia");
-const noticiaCategoriaDAO = require("../../model/DAO/noticiaCategoria");
+const noticiaDAO = require("../../../model/DAO/noticia");
+const enderecoDAO = require("../../../model/DAO/endereco");
+const midiaDAO = require("../../../model/DAO/midia");
+const noticiaCategoriaDAO = require("../../../model/DAO/noticiaCategoria");
+const categoriaDAO = require("../../../model/DAO/categoria");
 
 async function inserirNoticia(noticia, contentType) {
     try {
@@ -286,21 +287,28 @@ async function excluirNoticia(idNoticia) {
 
 async function listarTodasNoticias() {
     try {
-        const resultNoticias = await noticiaDAO.selectAllNoticias();
+        const resultNoticias = await noticiaDAO.selectAllNoticias()
 
         if (resultNoticias && resultNoticias.length > 0) {
-            const noticiasComDetalhes = [];
+            const noticiasComDetalhes = []
             for (const noticia of resultNoticias) {
-                const endereco = await enderecoDAO.selectByIdEndereco(noticia.tbl_endereco_id);
-                const midias = await midiaDAO.selectMidiasByNoticiaId(noticia.id);
-                const categorias = await noticiaCategoriaDAO.selectCategoriasByNoticiaId(noticia.id); // Crie essa função no seu DAO de associação para buscar as categorias
+                const endereco = await enderecoDAO.selectByIdEndereco(noticia.tbl_endereco_id)
 
+                const midias = await midiaDAO.selectMidiasByNoticiaId(noticia.id)
+                const categorias = []
+                const categoriasNoticia = await noticiaCategoriaDAO.selectCategoriasByNoticiaId(noticia.id)
+                
+                for(let categoriaNoticia of categoriasNoticia){
+                    const categoria = await categoriaDAO.selectByIdCategoria(categoriaNoticia.tbl_categoria_id)
+                    categorias.push(categoria)
+                }
+                delete noticia.tbl_endereco_id
                 noticiasComDetalhes.push({
                     ...noticia,
                     endereco: endereco || null,
-                    midias: midias || [],
+                    urls_midia: midias || [],
                     categorias: categorias || []
-                });
+                })
             }
 
             return {
@@ -308,7 +316,7 @@ async function listarTodasNoticias() {
                 status_code: 200,
                 items: noticiasComDetalhes.length,
                 noticias: noticiasComDetalhes
-            };
+            }
         } else {
             return MENSAGE.ERROR_NOT_FOUND;
         }
@@ -321,24 +329,35 @@ async function listarTodasNoticias() {
 async function buscarNoticia(idNoticia) {
     try {
         if (CORRECTION.CHECK_ID(idNoticia)) {
-            const resultNoticia = await noticiaDAO.selectByIdNoticia(parseInt(idNoticia));
+            const resultNoticias = await noticiaDAO.selectByIdNoticia(parseInt(idNoticia));
 
-            if (resultNoticia) {
-                const endereco = await enderecoDAO.selectByIdEndereco(resultNoticia.tbl_endereco_id);
-                const midias = await midiaDAO.selectMidiasByNoticiaId(resultNoticia.id);
-                const categorias = await noticiaCategoriaDAO.selectCategoriasByNoticiaId(resultNoticia.id); // Crie essa função no seu DAO de associação para buscar as categorias
+            if (resultNoticias) {
+                const noticiasComDetalhes = []
+                for (const noticia of resultNoticias) {
+                    const endereco = await enderecoDAO.selectByIdEndereco(noticia.tbl_endereco_id)
 
-                const noticiaDetalhada = {
-                    ...resultNoticia,
-                    endereco: endereco || null,
-                    midias: midias || [],
-                    categorias: categorias || []
-                };
+                    const midias = await midiaDAO.selectMidiasByNoticiaId(noticia.id)
+                    const categorias = []
+                    const categoriasNoticia = await noticiaCategoriaDAO.selectCategoriasByNoticiaId(noticia.id)
+                    
+                    for(let categoriaNoticia of categoriasNoticia){
+                        const categoria = await categoriaDAO.selectByIdCategoria(categoriaNoticia.tbl_categoria_id)
+                        categorias.push(categoria)
+                    }
+                    delete noticia.tbl_endereco_id
+                    noticiasComDetalhes.push({
+                        ...noticia,
+                        endereco: endereco || null,
+                        urls_midia: midias || [],
+                        categorias: categorias || []
+                    })
+                }
+
 
                 return {
                     status: true,
                     status_code: 200,
-                    noticia: noticiaDetalhada
+                    noticia: noticiasComDetalhes
                 };
             } else {
                 return MENSAGE.ERROR_NOT_FOUND;

@@ -5,10 +5,12 @@ const prisma = new PrismaClient()
 async function insertMidia(midia) {
     try {
         let sql = `INSERT INTO tbl_midia (
-                        url_img
+                        url_midia,
+                        tbl_noticia_id
                         
                     ) VALUES (
-                        '${midia.url_img}'
+                        '${midia.url_midia}',
+                        '${midia.tbl_noticia_id}'
         
                     )`
 
@@ -31,7 +33,8 @@ async function insertMidia(midia) {
 async function updateMidia(midia) {
     try {
         let sql = `UPDATE tbl_midia SET
-                        url_img = '${midia.url_img}'
+                        url_midia = '${midia.url_midia}'
+                        tbl_noticia_id = '${midia.tbl_noticia_id}'
                     WHERE id = ${midia.id}`
 
         let result = await prisma.$executeRawUnsafe(sql)
@@ -78,7 +81,17 @@ async function selectByIdMidia(idMidia) {
     try {
         let sql = `SELECT * FROM tbl_midia WHERE id = ${idMidia}`
         let result = await prisma.$queryRawUnsafe(sql)
-        return result ? result[0] : false
+        return result ? result : false
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
+async function selectMidiasByNoticiaId(idNoticia) {
+    try {
+        let sql = `SELECT * FROM tbl_midia WHERE tbl_noticia_id = ${idNoticia}`
+        let result = await prisma.$queryRawUnsafe(sql)
+        return result ? result : false
     } catch (error) {
         console.log(error)
         return false
@@ -90,5 +103,6 @@ module.exports = {
     updateMidia,
     deleteMidia,
     selectAllMidias,
-    selectByIdMidia
+    selectByIdMidia,
+    selectMidiasByNoticiaId
 }

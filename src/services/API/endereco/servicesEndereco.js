@@ -1,8 +1,8 @@
-const MENSAGE = require("../../modulo/config");
-const CORRECTION = require("../../utils/inputCheck");
-const TableCORRECTION = require("../../utils/tablesCheck");
+const MENSAGE = require("../../../modulo/config");
+const CORRECTION = require("../../../utils/inputCheck");
+const TableCORRECTION = require("../../../utils/tablesCheck");
 
-const enderecoDAO = require("../../model/DAO/endereco"); // Importa o DAO de endereço
+const enderecoDAO = require("../../../model/DAO/endereco"); // Importa o DAO de endereço
 
 async function inserirEndereco(endereco, contentType) {
     try {

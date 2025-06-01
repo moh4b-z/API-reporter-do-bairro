@@ -1,8 +1,8 @@
-const MENSAGE = require("../../modulo/config");
-const CORRECTION = require("../../utils/inputCheck");
-const TableCORRECTION = require("../../utils/tablesCheck");
+const MENSAGE = require("../../../modulo/config");
+const CORRECTION = require("../../../utils/inputCheck");
+const TableCORRECTION = require("../../../utils/tablesCheck");
 
-const noticiaCategoriaDAO = require("../../model/DAO/noticiaCategoria");
+const noticiaCategoriaDAO = require("../../../model/DAO/noticiaCategoria");
 
 // Inserir associação
 async function inserirNoticiaCategoria(noticiaCategoria, contentType) {

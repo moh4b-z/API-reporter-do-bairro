@@ -9,6 +9,7 @@ async function insertNoticia(noticia) {
             data: {
                 titulo: noticia.titulo,
                 conteudo: noticia.conteudo,
+                data_postagem: noticia.data_postagem,
                 tbl_usuario_id: noticia.tbl_usuario_id,
                 tbl_endereco_id: noticia.tbl_endereco_id // Agora usa a FK para tbl_endereco
             }
@@ -30,6 +31,7 @@ async function updateNoticia(noticia) {
             data: {
                 titulo: noticia.titulo,
                 conteudo: noticia.conteudo,
+                data_postagem: noticia.data_postagem,
                 tbl_usuario_id: noticia.tbl_usuario_id,
                 tbl_endereco_id: noticia.tbl_endereco_id // Agora usa a FK para tbl_endereco
             }
@@ -74,7 +76,7 @@ async function selectByIdNoticia(idNoticia) {
     try {
         let sql = `SELECT * FROM tbl_noticia WHERE id = ${idNoticia}`
         let result = await prisma.$queryRawUnsafe(sql)
-        return result ? result[0] : false
+        return result ? result : false
     } catch (error) {
         console.log(error)
         return false

@@ -4,7 +4,7 @@ const prisma = new PrismaClient()
 // Inserir categoria
 async function insertCategoria(categoria) {
     try {
-        let sql = `INSERT INTO categoria (
+        let sql = `INSERT INTO tbl_categoria (
                         nome,
                         descricao,
                         sigla
@@ -32,7 +32,7 @@ async function insertCategoria(categoria) {
 // Atualizar categoria
 async function updateCategoria(categoria) {
     try {
-        let sql = `UPDATE categoria SET
+        let sql = `UPDATE tbl_categoria SET
                         nome = '${categoria.nome}',
                         descricao = '${categoria.descricao}',
                         sigla = '${categoria.sigla}'
@@ -56,7 +56,7 @@ async function updateCategoria(categoria) {
 // Deletar categoria
 async function deleteCategoria(idCategoria) {
     try {
-        let sql = `DELETE FROM categoria WHERE id = ${idCategoria}`
+        let sql = `DELETE FROM tbl_categoria WHERE id = ${idCategoria}`
         let result = await prisma.$executeRawUnsafe(sql)
         return result ? true : false
     } catch (error) {
@@ -68,7 +68,7 @@ async function deleteCategoria(idCategoria) {
 // Buscar todas as categorias
 async function selectAllCategoria() {
     try {
-        let sql = 'SELECT * FROM categoria ORDER BY id DESC'
+        let sql = 'SELECT * FROM tbl_categoria ORDER BY id DESC'
         let result = await prisma.$queryRawUnsafe(sql)
         return result ? result : false
     } catch (error) {
@@ -80,7 +80,9 @@ async function selectAllCategoria() {
 // Buscar categoria por ID
 async function selectByIdCategoria(idCategoria) {
     try {
-        let sql = `SELECT * FROM categoria WHERE id = ${idCategoria}`
+        console.log(idCategoria);
+        
+        let sql = `SELECT * FROM tbl_categoria WHERE id = ${idCategoria}`
         let result = await prisma.$queryRawUnsafe(sql)
         return result ? result[0] : false
     } catch (error) {

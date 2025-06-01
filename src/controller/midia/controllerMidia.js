@@ -1,4 +1,4 @@
-const servicesMidia = require("../../services/midia/servicesMidia")
+const servicesMidia = require("../../services/API/midia/servicesMidia")
 
 // POST: Inserir nova mídia
 async function postMidia(request, response) {

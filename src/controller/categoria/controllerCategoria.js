@@ -1,4 +1,4 @@
-const servicesCategoria = require("../../services/categoria/servicesCategoria");
+const servicesCategoria = require("../../services/API/categoria/servicesCategoria");
 
 async function postCategoria(request, response) {
     let contentType = request.headers['content-type'];
