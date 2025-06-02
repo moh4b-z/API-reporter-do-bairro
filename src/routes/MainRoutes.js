@@ -6,6 +6,7 @@ const routesNoticia = require('./routesNoticia')
 const routesCategoria = require('./routesCategoria')
 const routesMidia = require('./routesMidia')
 const routesEndereco = require('./routesEndereco')
+const routesStatus = require('./routesStatus')
 
 
 
@@ -14,5 +15,6 @@ router.use('/noticia', routesNoticia)
 router.use('/categoria', routesCategoria)
 router.use('/midia', routesMidia)
 router.use('/endereco', routesEndereco)
+router.use('/status', routesStatus)
 
 module.exports = router

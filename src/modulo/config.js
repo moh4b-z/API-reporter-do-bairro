@@ -73,6 +73,11 @@ const SUCCESS_LOGIN = {
     status_code: 200,
     messagem: "Login bem sucedido"
 }
+const active_server = {
+    status: true,
+    status_code: 200,
+    messagem: "Servidor ativo"
+}
 
 module.exports = {
     ERROR_REQUIRED_FIELDS,
@@ -87,5 +92,6 @@ module.exports = {
     SUCCESS_CEATED_ITEM,
     SUCCESS_DELETE_ITEM,
     SUCCESS_UPDATED_ITEM,
-    SUCCESS_LOGIN
+    SUCCESS_LOGIN,
+    active_server
 }
