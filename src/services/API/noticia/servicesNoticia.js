@@ -27,9 +27,6 @@ async function inserirNoticia(noticia, contentType) {
                     ...resultCEP
                 }
 
-                // console.log("-------");
-                // console.log(noticia.endereco);
-                // console.log("-------");
                 let resultEnderoco = await servicesEndereco.inserirEndereco(noticia.endereco, contentType)
 
                 if(resultEnderoco.endereco){
@@ -308,7 +305,7 @@ async function listarTodasNoticias() {
 async function buscarNoticia(idNoticia) {
     try {
         if (CORRECTION.CHECK_ID(idNoticia)) {
-            const resultNoticias = await noticiaDAO.selectByIdNoticia(parseInt(idNoticia));
+            const resultNoticias = await noticiaDAO.selectByIdNoticia(parseInt(idNoticia))
 
             if (resultNoticias) {
                 const noticiasComDetalhes = []
@@ -332,12 +329,12 @@ async function buscarNoticia(idNoticia) {
                     })
                 }
 
-
                 return {
                     status: true,
                     status_code: 200,
-                    noticia: noticiasComDetalhes
-                };
+                    items: noticiasComDetalhes.length,
+                    noticias: noticiasComDetalhes
+                }
             } else {
                 return MENSAGE.ERROR_NOT_FOUND;
             }

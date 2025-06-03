@@ -44,7 +44,7 @@ async function atualizarCategoria(categoria, idCategoria, contentType) {
 
                     return result ? MENSAGE.SUCCESS_UPDATED_ITEM : MENSAGE.ERROR_INTERNAL_SERVER_MODEL;
                 } else if (resultCategoria.status_code == 404) {
-                    console.log(resultCategoria)
+                    //console.log(resultCategoria)
                     return MENSAGE.ERROR_NOT_FOUND;
                 } else {
                     return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES;
