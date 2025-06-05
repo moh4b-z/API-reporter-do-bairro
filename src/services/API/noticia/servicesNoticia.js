@@ -36,21 +36,27 @@ async function inserirNoticia(noticia, contentType) {
                         const result = await noticiaDAO.insertNoticia(noticia)
                         if (result) {
                             result.urls_midia = []
-                            for(let midia of noticia.urls_midia){
-                                let midias = await servicesMidia.inserirMidia({
-                                    url_midia: midia,
-                                    tbl_noticia_id: result.id
-                                }, contentType)
-                                result.urls_midia.push(midias)
+                            if(noticia.urls_midia){
+                                for(let midia of noticia.urls_midia){
+                                    let midias = await servicesMidia.inserirMidia({
+                                        url_midia: midia,
+                                        tbl_noticia_id: result.id
+                                    }, contentType)
+                                    result.urls_midia.push(midias)
+                                }
                             }
+                            
                             result.categorias = []
-                            for(let id_categoria of noticia.categorias){
-                                let categoria = await servicesNoticiaCategoria.inserirNoticiaCategoria({
-                                    tbl_categoria_id: id_categoria,
-                                    tbl_noticia_id: result.id
-                                }, contentType)
-                                result.categorias.push(categoria)
+                            if(noticia.categorias){
+                                for(let id_categoria of noticia.categorias){
+                                    let categoria = await servicesNoticiaCategoria.inserirNoticiaCategoria({
+                                        tbl_categoria_id: id_categoria,
+                                        tbl_noticia_id: result.id
+                                    }, contentType)
+                                    result.categorias.push(categoria)
+                                }
                             }
+                            
                             return {
                                 ...MENSAGE.SUCCESS_CEATED_ITEM,
                                 noticia: result

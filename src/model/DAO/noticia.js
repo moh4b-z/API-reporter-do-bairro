@@ -5,6 +5,8 @@ const prisma = new PrismaClient()
 // Inserir notícia
 async function insertNoticia(noticia) {
     try {
+        console.log(noticia);
+        
         const novaNoticia = await prisma.tbl_noticia.create({
             data: {
                 titulo: noticia.titulo,
@@ -13,7 +15,7 @@ async function insertNoticia(noticia) {
                 tbl_usuario_id: noticia.tbl_usuario_id,
                 tbl_endereco_id: noticia.tbl_endereco_id // Agora usa a FK para tbl_endereco
             }
-        });
+        })
         return novaNoticia;
     } catch (error) {
         console.error("Erro ao inserir notícia:", error);

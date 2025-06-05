@@ -58,7 +58,7 @@ CREATE TABLE tbl_midia (
     id INT PRIMARY KEY AUTO_INCREMENT,
     url_midia VARCHAR(1000) NOT NULL,
     tbl_noticia_id INT NOT NULL,
-    FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id)
+    FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id) ON DELETE CASCADE
 );
 
 
@@ -67,7 +67,7 @@ CREATE TABLE tbl_noticia_categoria (
     id INT PRIMARY KEY AUTO_INCREMENT,
     tbl_noticia_id INT NOT NULL,
     tbl_categoria_id INT NOT NULL,
-    FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id),
+    FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id) ON DELETE CASCADE,
     FOREIGN KEY (tbl_categoria_id) REFERENCES tbl_categoria(id)
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE tbl_comentarios (
     conteudo TEXT NOT NULL,
     data_postagem DATE NOT NULL,
     tbl_noticia_id INT,
-    FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id),
+    FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id) ON DELETE CASCADE,
     tbl_usuario_id INT,
     FOREIGN KEY (tbl_usuario_id) REFERENCES tbl_usuario(id)
 );
