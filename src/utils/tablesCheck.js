@@ -107,14 +107,13 @@ function CHECK_tbl_noticia_categoria(noticiaCategoria) {
 
 function CHECK_tbl_comentarios(comentario) {
     if (
-        CORRECTION.CHECK_UNDEFINED(comentario.comentario) &&
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(comentario.data_comentario, 24) &&
-        CORRECTION.CHECK_ID(comentario.tbl_usuario_id) &&
+        CORRECTION.CHECK_UNDEFINED(comentario.conteudo) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(comentario.data, 24) &&
         CORRECTION.CHECK_ID(comentario.tbl_noticia_id)
     ) {
-        return true
+        return true;
     } else {
-        return false
+        return false;
     }
 }
 
