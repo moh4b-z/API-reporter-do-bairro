@@ -7,9 +7,11 @@ const routesCategoria = require('./routesCategoria')
 const routesMidia = require('./routesMidia')
 const routesEndereco = require('./routesEndereco')
 const routesStatus = require('./routesStatus')
+const routesComentarios = require('./routesComentarios')
 
 
 
+router.use('/comentario', routesComentarios)
 router.use('/user', routesUsuario)
 router.use('/noticia', routesNoticia)
 router.use('/categoria', routesCategoria)
