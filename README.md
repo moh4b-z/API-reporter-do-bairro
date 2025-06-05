@@ -1,15 +1,21 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=4B0082&height=120&section=header"/>
 
-<h1 align="center">📰 Reporter do Bairro — API Back-End</h1>
-<p align="center"><i>Sua voz ativa para melhorar o bairro onde vive!</i></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Node.js-18.x-brightgreen?logo=node.js" />
-  <img src="https://img.shields.io/badge/Express.js-%5E4.18-blue?logo=express" />
-  <img src="https://img.shields.io/badge/Prisma-ORM-blueviolet?logo=prisma" />
-  <img src="https://img.shields.io/badge/Firebase-Admin-yellow?logo=firebase" />
-  <img src="https://img.shields.io/badge/license-MIT-green.svg" />
-  <img src="https://img.shields.io/badge/status-em%20desenvolvimento-orange" />
+  <img src="https://readme-typing-svg.herokuapp.com/?color=8A2BE2&size=25&center=true&vCenter=true&width=1000&lines=Bem-vindo+ao+Reporter+do+Bairro!;Uma+API+para+melhorar+sua+cidade.;Registre+ocorrências+urbanas+com+facilidade.;Buracos,+iluminação,+trânsito+e+mais.;Projeto+desenvolvido+por+alunos+do+Senai+Jandira.;Tecnologias+modernas+e+colaboração+efetiva.;Obrigado+por+visitar!+%F0%9F%8C%9F" alt="Typing SVG" />
+</p>
+
+<br />
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-v18.17.1-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/Express.js-v4.18.2-000000?style=for-the-badge&logo=express&logoColor=white" />
+  <img src="https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma&logoColor=white" />
+  <img src="https://img.shields.io/badge/Firebase-Admin-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" />
+  <img src="https://img.shields.io/badge/MySQL-8.0-00758F?style=for-the-badge&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Dotenv-env-8A2BE2?style=for-the-badge&logo=dotenv&logoColor=white" />
+  <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-FFA500?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/License-MIT-4B0082?style=for-the-badge" />
 </p>
 
 ---
