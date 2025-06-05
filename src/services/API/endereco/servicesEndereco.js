@@ -1,6 +1,7 @@
 const MENSAGE = require("../../../modulo/config");
 const CORRECTION = require("../../../utils/inputCheck");
 const TableCORRECTION = require("../../../utils/tablesCheck");
+const Nominatim = require("../../Nominatim/buscarCoordenadas");
 
 const enderecoDAO = require("../../../model/DAO/endereco"); // Importa o DAO de endereço
 
@@ -123,10 +124,35 @@ async function buscarEndereco(idEndereco) {
     }
 }
 
+async function verificar(Endereco) {
+    try {
+        // console.log(Endereco)
+        if (Endereco) {
+            const result = await Nominatim.buscarCoordenadasComEndereco(Endereco)
+
+            if (result) {
+                return result
+                
+            } else {
+                return MENSAGE.ERROR_NOT_FOUND
+            }
+        } else {
+            // console.log(Endereco)
+            
+            return MENSAGE.ERROR_REQUIRED_FIELDS
+        }
+    } catch (error) {
+        console.error("Erro ao buscar endereço:", error)
+        return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES
+    }
+}
+
+
 module.exports = {
     inserirEndereco,
     atualizarEndereco,
     excluirEndereco,
     listarTodosEnderecos,
-    buscarEndereco
+    buscarEndereco,
+    verificar
 };

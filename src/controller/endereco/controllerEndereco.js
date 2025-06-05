@@ -28,13 +28,27 @@ async function getSearchEndereco(request, response) {
     response.json(resultEndereco);
 }
 
+
+
+// GET:
+async function getVerificar(request, response) {
+    let endereco = request.query.endereco
+    console.log(endereco)
+    
+    let resultEndereco = await servicesEndereco.verificar(endereco)
+
+    response.json(resultEndereco)
+}
+
+
+
 // DELETE: Excluir endereço
 async function deleteEndereco(request, response) {
-    let idEndereco = request.params.idEndereco;
-    let resultEndereco = await servicesEndereco.excluirEndereco(idEndereco);
+    let idEndereco = request.params.idEndereco
+    let resultEndereco = await servicesEndereco.excluirEndereco(idEndereco)
 
-    response.status(resultEndereco.status_code);
-    response.json(resultEndereco);
+    response.status(resultEndereco.status_code)
+    response.json(resultEndereco)
 }
 
 // PUT: Atualizar endereço
@@ -54,5 +68,6 @@ module.exports = {
     putEndereco,
     deleteEndereco,
     getSearchAllEnderecos,
-    getSearchEndereco
+    getSearchEndereco,
+    getVerificar
 };

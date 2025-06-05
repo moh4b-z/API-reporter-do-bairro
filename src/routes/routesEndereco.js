@@ -15,6 +15,10 @@ router.put(
     controllerEndereco.putEndereco
 )
 router.get(
+    '/info/',
+    controllerEndereco.getVerificar
+)
+router.get(
     '',
     controllerEndereco.getSearchAllEnderecos
 )
@@ -22,5 +26,6 @@ router.get(
     '/:idUsuario',
     controllerEndereco.getSearchEndereco
 )
+
 
 module.exports = router
