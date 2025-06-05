@@ -32,29 +32,31 @@ async function insertComentario(comentario) {
 }
 
 // Atualizar comentário
+
 async function updateComentario(comentario) {
     try {
         let sql = `UPDATE tbl_comentarios SET
                         conteudo = '${comentario.conteudo}',
                         data_postagem = '${comentario.data_postagem}',
-                        tbl_noticia_id = ${comentario.tbl_noticia_id}
+                        tbl_noticia_id = ${comentario.tbl_noticia_id},
                         tbl_usuario_id = ${comentario.tbl_usuario_id}
-                    WHERE id = ${comentario.id}`;
+                    WHERE id = ${comentario.id}`
 
         let result = await prisma.$executeRawUnsafe(sql);
 
         if (result) {
-            let sqlSelect = `SELECT * FROM tbl_comentarios WHERE id = ${comentario.id}`;
-            let comentarioAtualizado = await prisma.$queryRawUnsafe(sqlSelect);
-            return comentarioAtualizado[0];
+            let sqlSelect = `SELECT * FROM tbl_comentarios WHERE id = ${comentario.id}`
+            let comentarioAtualizado = await prisma.$queryRawUnsafe(sqlSelect)
+            return comentarioAtualizado[0]
         } else {
-            return false;
+            return false
         }
     } catch (error) {
-        console.log(error);
-        return false;
+        console.log(error)
+        return false
     }
 }
+
 
 // Deletar comentário
 async function deleteComentario(idComentario) {
