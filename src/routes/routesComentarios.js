@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const controllerComentario = require('../controller/comentario/controllerComentario');
+const express = require('express')
+const router = express.Router()
+const controllerComentario = require('../controller/comentario/controllerComentario')
 
 router.post(
     '',
@@ -27,4 +27,4 @@ router.get(
     controllerComentario.getSearchComentario
 )
 
-module.exports = router;
+module.exports = router

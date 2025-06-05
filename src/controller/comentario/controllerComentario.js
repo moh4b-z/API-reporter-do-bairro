@@ -1,4 +1,4 @@
-const servicesComentarios = require("../../services/API/comentario/servicesComentarios"); // Importa o arquivo de serviços de comentários
+const servicesComentarios = require("../../services/API/comentarios/servicesComentarios") // Importa o arquivo de serviços de comentários
 
 // POST: Inserir novo comentário
 async function postComentario(request, response) {

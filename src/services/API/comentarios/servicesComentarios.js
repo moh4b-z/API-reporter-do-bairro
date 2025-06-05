@@ -2,7 +2,7 @@ const MENSAGE = require("../../../modulo/config")
 const CORRECTION = require("../../../utils/inputCheck")
 const TableCORRECTION = require("../../../utils/tablesCheck")
 
-const comentarioDAO = require("../../../model/DAO/comentario") // Importa o DAO de comentários
+const comentarioDAO = require("../../../model/DAO/comentarios") // Importa o DAO de comentários
 
 // Inserir novo comentário
 async function inserirComentario(comentario, contentType) {
