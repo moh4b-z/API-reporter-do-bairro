@@ -108,9 +108,9 @@ function CHECK_tbl_comentarios(comentario) {
         CORRECTION.CHECK_ID(comentario.tbl_usuario_id) &&
         CORRECTION.CHECK_ID(comentario.tbl_noticia_id)
     ) {
-        return true;
+        return true
     } else {
-        return false;
+        return false
     }
 }
 

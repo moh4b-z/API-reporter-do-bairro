@@ -9,8 +9,8 @@ function CHECK_tbl_usuario(usuario) {
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.data_nascimento, 24),
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.nome, 100),
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.foto_perfil, 300)
-    )
-    
+    );
+
     if (
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.senha_salt, 32) &&
         CORRECTION.CHECK_VARCHAR_NOT_NULL(usuario.senha_hash, 128) &&
@@ -59,7 +59,6 @@ function CHECK_tbl_endereco(endereco) {
     }
 }
 
-
 function CHECK_tbl_noticia(noticia) {
     if (
         CORRECTION.CHECK_VARCHAR_NOT_NULL(noticia.titulo, 100) &&
@@ -68,21 +67,21 @@ function CHECK_tbl_noticia(noticia) {
         CORRECTION.CHECK_ID(noticia.tbl_usuario_id) &&
         CORRECTION.CHECK_ID(noticia.tbl_endereco_id)
     ) {
-        return true
+        return true;
     } else {
-        return false
+        return false;
     }
 }
 
 function CHECK_tbl_midia(midia) {
     // console.log(
-    //     CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_midia, 500) ,
-    //     CORRECTION.CHECK_ID(midia.tbl_noticia_id) 
+    //     CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_midia, 500),
+    //     CORRECTION.CHECK_ID(midia.tbl_noticia_id)
     // );
-    
+
     if (
         CORRECTION.CHECK_VARCHAR_NOT_NULL(midia.url_midia, 500) &&
-        CORRECTION.CHECK_ID(midia.tbl_noticia_id) 
+        CORRECTION.CHECK_ID(midia.tbl_noticia_id)
     ) {
         return true;
     } else {
@@ -93,16 +92,29 @@ function CHECK_tbl_midia(midia) {
 function CHECK_tbl_noticia_categoria(noticiaCategoria) {
     // console.log(
     //     CORRECTION.CHECK_ID(noticiaCategoria.tbl_noticia_id),
-    //     CORRECTION.CHECK_ID(noticiaCategoria.tbl_categoria_id) 
-    // )
-    
+    //     CORRECTION.CHECK_ID(noticiaCategoria.tbl_categoria_id)
+    // );
+
     if (
         CORRECTION.CHECK_ID(noticiaCategoria.tbl_noticia_id) &&
-        CORRECTION.CHECK_ID(noticiaCategoria.tbl_categoria_id) 
+        CORRECTION.CHECK_ID(noticiaCategoria.tbl_categoria_id)
     ) {
         return true;
     } else {
         return false;
+    }
+}
+
+function CHECK_tbl_comentarios(comentario) {
+    if (
+        CORRECTION.CHECK_UNDEFINED(comentario.comentario) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(comentario.data_comentario, 24) &&
+        CORRECTION.CHECK_ID(comentario.tbl_usuario_id) &&
+        CORRECTION.CHECK_ID(comentario.tbl_noticia_id)
+    ) {
+        return true
+    } else {
+        return false
     }
 }
 
@@ -112,5 +124,6 @@ module.exports = {
     CHECK_tbl_categoria,
     CHECK_tbl_midia,
     CHECK_tbl_noticia_categoria,
-    CHECK_tbl_endereco // Exporta a nova função de verificação para endereço
-};
+    CHECK_tbl_endereco,
+    CHECK_tbl_comentarios,
+}
