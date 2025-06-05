@@ -233,22 +233,6 @@ async function excluirNoticia(idNoticia) {
                 return MENSAGE.ERROR_NOT_FOUND;
             }
 
-            // Deletar as mídias associadas à notícia
-            const midiasAssociadas = await midiaDAO.selectMidiasByNoticiaId(parseInt(idNoticia));
-            if (midiasAssociadas && midiasAssociadas.length > 0) {
-                for (const midia of midiasAssociadas) {
-                    await midiaDAO.deleteMidia(midia.id);
-                }
-            }
-
-            // Deletar as associações de categoria da notícia
-            const categoriasAssociadas = await noticiaCategoriaDAO.selectNoticiaCategoriasByNoticiaId(parseInt(idNoticia));
-            if (categoriasAssociadas && categoriasAssociadas.length > 0) {
-                for (const associacao of categoriasAssociadas) {
-                    await noticiaCategoriaDAO.excluirNoticiaCategoria(associacao.id);
-                }
-            }
-
             // Deletar a notícia
             const result = await noticiaDAO.deleteNoticia(parseInt(idNoticia));
 
