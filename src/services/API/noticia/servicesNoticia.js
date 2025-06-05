@@ -11,6 +11,7 @@ const buscarDadosViaCep = require("../../viaCEP/buscarDadosViaCep")
 const servicesEndereco = require("../endereco/servicesEndereco")
 const servicesMidia = require("../midia/servicesMidia")
 const servicesNoticiaCategoria = require("../noticia_categoria/servicesNoticiaCategoria")
+const servicesComentarios = require("../comentarios/servicesComentarios")
 
 async function inserirNoticia(noticia, contentType) {
     try {
@@ -271,6 +272,7 @@ async function listarTodasNoticias() {
                 const endereco = await enderecoDAO.selectByIdEndereco(noticia.tbl_endereco_id)
 
                 const midias = await midiaDAO.selectMidiasByNoticiaId(noticia.id)
+                const comentarios = await servicesComentarios.buscarComentariosDeNoticia(noticia.id)
                 const categorias = []
                 const categoriasNoticia = await noticiaCategoriaDAO.selectCategoriasByNoticiaId(noticia.id)
                 
@@ -283,7 +285,8 @@ async function listarTodasNoticias() {
                     ...noticia,
                     endereco: endereco || null,
                     urls_midia: midias || [],
-                    categorias: categorias || []
+                    categorias: categorias || [],
+                    comentarios: comentarios.comentario ? comentarios.comentario : []
                 })
             }
 
@@ -313,6 +316,7 @@ async function buscarNoticia(idNoticia) {
                     const endereco = await enderecoDAO.selectByIdEndereco(noticia.tbl_endereco_id)
 
                     const midias = await midiaDAO.selectMidiasByNoticiaId(noticia.id)
+                    const comentarios = await servicesComentarios.buscarComentariosDeNoticia(noticia.id)
                     const categorias = []
                     const categoriasNoticia = await noticiaCategoriaDAO.selectCategoriasByNoticiaId(noticia.id)
                     
@@ -325,7 +329,8 @@ async function buscarNoticia(idNoticia) {
                         ...noticia,
                         endereco: endereco || null,
                         urls_midia: midias || [],
-                        categorias: categorias || []
+                        categorias: categorias || [],
+                        comentarios: comentarios.comentario ? comentarios.comentario : []
                     })
                 }
 

@@ -87,7 +87,7 @@ async function selectByIdComentario(idComentario) {
     try {
         let sql = `SELECT * FROM tbl_comentarios WHERE id = ${idComentario}`
         let result = await prisma.$queryRawUnsafe(sql)
-        return result ? result[0] : false
+        return result ? result : false
     } catch (error) {
         console.log(error)
         return false
@@ -99,7 +99,7 @@ async function selectByIdComentarioOfNoticia(idNoticia) {
     try {
         let sql = `SELECT * FROM tbl_comentarios WHERE tbl_noticia_id = ${idNoticia}`
         let result = await prisma.$queryRawUnsafe(sql)
-        return result ? result[0] : false
+        return result ? result : false
     } catch (error) {
         console.log(error)
         return false

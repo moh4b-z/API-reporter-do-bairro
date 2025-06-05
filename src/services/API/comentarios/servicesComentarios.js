@@ -2,7 +2,8 @@ const MENSAGE = require("../../../modulo/config")
 const CORRECTION = require("../../../utils/inputCheck")
 const TableCORRECTION = require("../../../utils/tablesCheck")
 
-const comentarioDAO = require("../../../model/DAO/comentarios") // Importa o DAO de comentários
+const comentarioDAO = require("../../../model/DAO/comentarios")
+const servicesUsuario = require("../usuario/servicesUsuario")
 
 // Inserir novo comentário
 async function inserirComentario(comentario, contentType) {
@@ -85,11 +86,24 @@ async function listarTodosComentarios() {
         const result = await comentarioDAO.selectAllComentario()
 
         if (result && result.length > 0) {
+            const  resultComentarios = []
+
+            for(let comentario of result){
+                let user = await servicesUsuario.buscarUsuario(comentario.tbl_usuario_id)
+                if(user.user){
+                    comentario.user = {
+                        nome: user.user.nome,
+                        foto_perfil: user.user.foto_perfil
+                    }
+                }
+                resultComentarios.push(comentario)
+            }
+
             return {
                 status: true,
                 status_code: 200,
-                items: result.length,
-                comentarios: result
+                items: resultComentarios.length,
+                comentarios: resultComentarios
             };
         } else {
             return MENSAGE.ERROR_NOT_FOUND
@@ -130,12 +144,26 @@ async function buscarComentariosDeNoticia(idNoticia) {
         if (CORRECTION.CHECK_ID(idNoticia)) {
             const result = await comentarioDAO.selectByIdComentarioOfNoticia(parseInt(idNoticia))
 
-            if (result) {
+            if (result && result.length > 0) {
+                const  resultComentarios = []
+
+                for(let comentario of result){                   
+                    let user =await servicesUsuario.buscarUsuario(comentario.tbl_usuario_id)
+                    console.log(user.user[0]);
+                    if(user.user[0]){
+                        comentario.user = {
+                            nome: user.user[0].nome,
+                            foto_perfil: user.user[0].foto_perfil
+                        }
+                    }
+                    resultComentarios.push(comentario)
+                }
                 return {
                     status: true,
                     status_code: 200,
-                    comentario: result
-                };
+                    items: resultComentarios.length,
+                    comentario: resultComentarios
+                }
             } else {
                 return MENSAGE.ERROR_NOT_FOUND
             }
