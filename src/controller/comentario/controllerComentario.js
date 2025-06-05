@@ -28,6 +28,15 @@ async function getSearchComentario(request, response) {
     response.json(resultComentario);
 }
 
+// GET: Buscar comentário por ID da noticia
+async function getSearchComentarioOfNoticia(request, response) {
+    let idNoticia = request.params.idNoticia
+    let resultComentario = await servicesComentarios.buscarComentario(idNoticia)
+
+    response.status(resultComentario.status_code)
+    response.json(resultComentario)
+}
+
 // DELETE: Excluir comentário
 async function deleteComentario(request, response) {
     let idComentario = request.params.idComentario;
@@ -54,5 +63,6 @@ module.exports = {
     putComentario,
     deleteComentario,
     getSearchAllComentarios,
-    getSearchComentario
+    getSearchComentario,
+    getSearchComentarioOfNoticia
 };

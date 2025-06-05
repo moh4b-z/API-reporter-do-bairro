@@ -124,10 +124,35 @@ async function buscarComentario(idComentario) {
     }
 }
 
+// Buscar comentário por ID
+async function buscarComentariosDeNoticia(idNoticia) {
+    try {
+        if (CORRECTION.CHECK_ID(idNoticia)) {
+            const result = await comentarioDAO.selectByIdComentarioOfNoticia(parseInt(idNoticia))
+
+            if (result) {
+                return {
+                    status: true,
+                    status_code: 200,
+                    comentario: result
+                };
+            } else {
+                return MENSAGE.ERROR_NOT_FOUND
+            }
+        } else {
+            return MENSAGE.ERROR_REQUIRED_FIELDS
+        }
+    } catch (error) {
+        console.error("Erro ao buscar comentário:", error)
+        return MENSAGE.ERROR_INTERNAL_SERVER_SERVICES
+    }
+}
+
 module.exports = {
     inserirComentario,
     atualizarComentario,
     excluirComentario,
     listarTodosComentarios,
-    buscarComentario
+    buscarComentario,
+    buscarComentariosDeNoticia
 };

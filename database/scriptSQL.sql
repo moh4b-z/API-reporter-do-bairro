@@ -76,5 +76,7 @@ CREATE TABLE tbl_comentarios (
     conteudo TEXT NOT NULL,
     data_postagem DATE NOT NULL,
     tbl_noticia_id INT,
-    FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id)
+    FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id),
+    tbl_usuario_id INT,
+    FOREIGN KEY (tbl_usuario_id) REFERENCES tbl_usuario(id)
 );

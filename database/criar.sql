@@ -1,9 +1,45 @@
 INSERT INTO tbl_usuario (nome, senha_salt, senha_hash, email, data_nascimento, foto_perfil, biografia) VALUES
     (
-        'kauan', 
+        'Kauan', 
         'd8ccb7819a32f841d5be1825879f8954', 
         '94786d41a2b3e2641e9dccafc2acc6faa4e95889b3ce0564b09a305867e1236831af2ab5adff43e4c667d1f2b274c90dd8ffcd5e84038063976b45590dd319fa',
         'kauan@email.com',
+        '2000-05-12',
+        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fbr.freepik.com%2Ffotos-vetores-gratis%2Fuser-icon&psig=AOvVaw3yRHyWuHpKxV5EdOsyqUDw&ust=1748875350026000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDYosW60I0DFQAAAAAdAAAAABAE',
+        'Sim'
+    ),
+    (
+        'Kaike', 
+        'd8ccb7819a32f841d5be1825879f8954', 
+        '94786d41a2b3e2641e9dccafc2acc6faa4e95889b3ce0564b09a305867e1236831af2ab5adff43e4c667d1f2b274c90dd8ffcd5e84038063976b45590dd319fa',
+        'kaike@email.com',
+        '2000-05-12',
+        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fbr.freepik.com%2Ffotos-vetores-gratis%2Fuser-icon&psig=AOvVaw3yRHyWuHpKxV5EdOsyqUDw&ust=1748875350026000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDYosW60I0DFQAAAAAdAAAAABAE',
+        'Sim'
+    ),
+    (
+        'Mohammad', 
+        'd8ccb7819a32f841d5be1825879f8954', 
+        '94786d41a2b3e2641e9dccafc2acc6faa4e95889b3ce0564b09a305867e1236831af2ab5adff43e4c667d1f2b274c90dd8ffcd5e84038063976b45590dd319fa',
+        'mohammad@email.com',
+        '2000-05-12',
+        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fbr.freepik.com%2Ffotos-vetores-gratis%2Fuser-icon&psig=AOvVaw3yRHyWuHpKxV5EdOsyqUDw&ust=1748875350026000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDYosW60I0DFQAAAAAdAAAAABAE',
+        'Sim'
+    ),
+    (
+        'Fernando', 
+        'd8ccb7819a32f841d5be1825879f8954', 
+        '94786d41a2b3e2641e9dccafc2acc6faa4e95889b3ce0564b09a305867e1236831af2ab5adff43e4c667d1f2b274c90dd8ffcd5e84038063976b45590dd319fa',
+        'fernando@email.com',
+        '2000-05-12',
+        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fbr.freepik.com%2Ffotos-vetores-gratis%2Fuser-icon&psig=AOvVaw3yRHyWuHpKxV5EdOsyqUDw&ust=1748875350026000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDYosW60I0DFQAAAAAdAAAAABAE',
+        'Sim'
+    ),
+    (
+        'Richard', 
+        'd8ccb7819a32f841d5be1825879f8954', 
+        '94786d41a2b3e2641e9dccafc2acc6faa4e95889b3ce0564b09a305867e1236831af2ab5adff43e4c667d1f2b274c90dd8ffcd5e84038063976b45590dd319fa',
+        'richard@email.com',
         '2000-05-12',
         'https://www.google.com/url?sa=i&url=https%3A%2F%2Fbr.freepik.com%2Ffotos-vetores-gratis%2Fuser-icon&psig=AOvVaw3yRHyWuHpKxV5EdOsyqUDw&ust=1748875350026000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDYosW60I0DFQAAAAAdAAAAABAE',
         'Sim'
@@ -81,9 +117,9 @@ INSERT INTO tbl_midia (url_midia, tbl_noticia_id) VALUES
 
 
  
-INSERT INTO tbl_comentarios (conteudo, data_postagem, tbl_noticia_id) VALUES
-('Excelente matéria, muito informativa!', '2025-06-01', 1),
-('Não concordo com o ponto de vista apresentado.', '2025-06-02', 1),
-('Parabéns pela reportagem!', '2025-06-03', 2),
-('Faltou aprofundar mais sobre o tema.', '2025-06-04', 2),
-('Gostei muito da abordagem da notícia.', '2025-06-05', 3);
+INSERT INTO tbl_comentarios (conteudo, data_postagem, tbl_noticia_id, tbl_usuario_id) VALUES
+('Excelente matéria, muito informativa!', '2025-06-01', 1, 1),
+('Não concordo com o ponto de vista apresentado.', '2025-06-02', 1, 3),
+('Parabéns pela reportagem!', '2025-06-03', 2, 4),
+('Faltou aprofundar mais sobre o tema.', '2025-06-04', 2, 5),
+('Gostei muito da abordagem da notícia.', '2025-06-05', 3, 2);

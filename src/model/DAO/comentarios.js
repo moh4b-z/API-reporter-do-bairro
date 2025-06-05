@@ -7,11 +7,13 @@ async function insertComentario(comentario) {
         let sql = `INSERT INTO tbl_comentarios (
                         conteudo,
                         data_postagem,
-                        tbl_noticia_id
+                        tbl_noticia_id,
+                        tbl_usuario_id
                     ) VALUES (
                         '${comentario.conteudo}',
                         '${comentario.data_postagem}',
-                        ${comentario.tbl_noticia_id}
+                        ${comentario.tbl_noticia_id},
+                        ${comentario.tbl_usuario_id}
                     )`;
 
         let result = await prisma.$executeRawUnsafe(sql);
@@ -36,6 +38,7 @@ async function updateComentario(comentario) {
                         conteudo = '${comentario.conteudo}',
                         data_postagem = '${comentario.data_postagem}',
                         tbl_noticia_id = ${comentario.tbl_noticia_id}
+                        tbl_usuario_id = ${comentario.tbl_usuario_id}
                     WHERE id = ${comentario.id}`;
 
         let result = await prisma.$executeRawUnsafe(sql);
@@ -89,10 +92,23 @@ async function selectByIdComentario(idComentario) {
     }
 }
 
+// Buscar comentário por ID
+async function selectByIdComentarioOfNoticia(idNoticia) {
+    try {
+        let sql = `SELECT * FROM tbl_comentarios WHERE tbl_noticia_id = ${idNoticia}`;
+        let result = await prisma.$queryRawUnsafe(sql);
+        return result ? result[0] : false;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
 module.exports = {
     insertComentario,
     updateComentario,
     deleteComentario,
     selectAllComentario,
-    selectByIdComentario
+    selectByIdComentario,
+    selectByIdComentarioOfNoticia
 };

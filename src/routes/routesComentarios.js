@@ -26,5 +26,9 @@ router.get(
     '/:idComentario',
     controllerComentario.getSearchComentario
 )
+router.get(
+    '/:idNoticia',
+    controllerComentario.getSearchComentarioOfNoticia
+)
 
 module.exports = router
