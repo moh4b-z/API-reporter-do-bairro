@@ -74,7 +74,7 @@ CREATE TABLE tbl_noticia_categoria (
 CREATE TABLE tbl_comentarios (
     id INT PRIMARY KEY AUTO_INCREMENT,
     conteudo TEXT NOT NULL,
-    data DATE NOT NULL,
+    data_postagem DATE NOT NULL,
     tbl_noticia_id INT,
     FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id)
 );

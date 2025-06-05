@@ -6,11 +6,11 @@ async function insertComentario(comentario) {
     try {
         let sql = `INSERT INTO tbl_comentarios (
                         conteudo,
-                        data,
+                        data_postagem,
                         tbl_noticia_id
                     ) VALUES (
                         '${comentario.conteudo}',
-                        '${comentario.data}',
+                        '${comentario.data_postagem}',
                         ${comentario.tbl_noticia_id}
                     )`;
 
@@ -34,7 +34,7 @@ async function updateComentario(comentario) {
     try {
         let sql = `UPDATE tbl_comentarios SET
                         conteudo = '${comentario.conteudo}',
-                        data = '${comentario.data}',
+                        data_postagem = '${comentario.data_postagem}',
                         tbl_noticia_id = ${comentario.tbl_noticia_id}
                     WHERE id = ${comentario.id}`;
 

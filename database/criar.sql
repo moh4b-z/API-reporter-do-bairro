@@ -81,7 +81,7 @@ INSERT INTO tbl_midia (url_midia, tbl_noticia_id) VALUES
 
 
  
-INSERT INTO tbl_comentarios (conteudo, data, tbl_noticia_id) VALUES
+INSERT INTO tbl_comentarios (conteudo, data_postagem, tbl_noticia_id) VALUES
 ('Excelente matéria, muito informativa!', '2025-06-01', 1),
 ('Não concordo com o ponto de vista apresentado.', '2025-06-02', 1),
 ('Parabéns pela reportagem!', '2025-06-03', 2),

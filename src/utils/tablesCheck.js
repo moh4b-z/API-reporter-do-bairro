@@ -108,7 +108,7 @@ function CHECK_tbl_noticia_categoria(noticiaCategoria) {
 function CHECK_tbl_comentarios(comentario) {
     if (
         CORRECTION.CHECK_UNDEFINED(comentario.conteudo) &&
-        CORRECTION.CHECK_VARCHAR_NOT_NULL(comentario.data, 24) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(comentario.data_postagem, 24) &&
         CORRECTION.CHECK_ID(comentario.tbl_noticia_id)
     ) {
         return true;
