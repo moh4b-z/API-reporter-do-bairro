@@ -78,3 +78,12 @@ INSERT INTO tbl_midia (url_midia, tbl_noticia_id) VALUES
 ('https://img.nsctotal.com.br/wp-content/uploads/2023/05/AdobeStock_282004392-800x531.jpeg', 2),
 ('https://imgs.jusbr.com/publications/images/4a314da9761c57ac02539406e54d29d3', 3),
 ('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgy8eXz4QjEjkXYuR9zKi3NLaqEM4e53o_UeZKHHVYQ_qMXJzBDz019VvXdcMU11Y8dSttueTsSyprx-ErBXv4FgLxQejToV50-RTQT0sNxo3uYazlqWQy9j6JQ5wBj649PidJnVR8QOGYG3gLKODX6AO200ooWw2OrHNUQcwnCfWblX1zkjzVkAS8_Ns2O/s1024/torneira-sem-%C3%A1gua.jpg', 4);
+
+
+ 
+INSERT INTO tbl_comentarios (conteudo, data, tbl_noticia_id) VALUES
+('Excelente matéria, muito informativa!', '2025-06-01', 1),
+('Não concordo com o ponto de vista apresentado.', '2025-06-02', 1),
+('Parabéns pela reportagem!', '2025-06-03', 2),
+('Faltou aprofundar mais sobre o tema.', '2025-06-04', 2),
+('Gostei muito da abordagem da notícia.', '2025-06-05', 3);
