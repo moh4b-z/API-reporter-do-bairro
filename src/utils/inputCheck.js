@@ -101,6 +101,19 @@ function CHECK_UNDEFINED(text){
     }
 }
 
+function CHECK_tbl_comentarios(comentario) {
+    if (
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(comentario.comentario, 500) &&
+        CORRECTION.CHECK_VARCHAR_NOT_NULL(comentario.data_comentario, 24) &&
+        CORRECTION.CHECK_ID(comentario.tbl_usuario_id) &&
+        CORRECTION.CHECK_ID(comentario.tbl_noticia_id)
+    ) {
+        return true
+    } else {
+        return false
+    }
+}
+
 
 module.exports = {    
     CHECK_ID,
@@ -110,5 +123,6 @@ module.exports = {
     CHECK_UNDEFINED,
     CHECK_DECIMAL,
     CHECK_DECIMAL_NOT_NULL,
-    CHECK_TINYINT
+    CHECK_TINYINT,
+    CHECK_tbl_comentarios
 }

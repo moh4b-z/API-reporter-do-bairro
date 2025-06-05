@@ -70,3 +70,11 @@ CREATE TABLE tbl_noticia_categoria (
     FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id),
     FOREIGN KEY (tbl_categoria_id) REFERENCES tbl_categoria(id)
 );
+
+CREATE TABLE tbl_comentarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    conteudo TEXT NOT NULL,
+    data DATE NOT NULL,
+    tbl_noticia_id INT,
+    FOREIGN KEY (tbl_noticia_id) REFERENCES tbl_noticia(id)
+);
