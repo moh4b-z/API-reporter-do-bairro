@@ -44,7 +44,6 @@ async function putUsuario(request, response) {
 async function putLoginUsuario(request, response) {
     let contentType = request.headers['content-type']
     let dadosBody = request.body
-    console.log(request);
     
     let resultUsuario = await servicesUsuario.loginUsuario(dadosBody, contentType)
 

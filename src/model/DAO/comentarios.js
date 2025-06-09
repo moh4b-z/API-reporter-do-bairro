@@ -4,32 +4,22 @@ const prisma = new PrismaClient()
 // Inserir comentário
 async function insertComentario(comentario) {
     try {
-        let sql = `INSERT INTO tbl_comentarios (
-                        conteudo,
-                        data_postagem,
-                        tbl_noticia_id,
-                        tbl_usuario_id
-                    ) VALUES (
-                        '${comentario.conteudo}',
-                        '${comentario.data_postagem}',
-                        ${comentario.tbl_noticia_id},
-                        ${comentario.tbl_usuario_id}
-                    )`;
+        const novoComentario = await prisma.tbl_comentarios.create({
+            data: {
+                conteudo: comentario.conteudo,
+                data_postagem: new Date(comentario.data_postagem), // ou simplesmente: new Date()
+                tbl_noticia_id: comentario.tbl_noticia_id,
+                tbl_usuario_id: comentario.tbl_usuario_id
+            }
+        });
 
-        let result = await prisma.$executeRawUnsafe(sql)
-
-        if (result) {
-            let sqlSelect = `SELECT * FROM tbl_comentarios ORDER BY id DESC LIMIT 1`
-            let comentarioCriado = await prisma.$queryRawUnsafe(sqlSelect)
-            return comentarioCriado[0]
-        } else {
-            return false
-        }
+        return novoComentario;
     } catch (error) {
-        console.log(error)
-        return false
+        console.log(error);
+        return false;
     }
 }
+
 
 // Atualizar comentário
 

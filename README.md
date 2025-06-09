@@ -64,7 +64,7 @@ npx prisma db pull
 npx prisma generate
 
 # 4. Rode o servidor
-npm run dev
+node ./app.js
 
 ```
 
