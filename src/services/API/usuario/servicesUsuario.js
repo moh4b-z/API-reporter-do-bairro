@@ -4,6 +4,7 @@ const TableCORRECTION = require("../../../utils/tablesCheck")
 const encryptionFunction = require("../../../utils/encryptionFunction")
 
 const usuarioDAO = require("../../../model/DAO/usuario")
+const servicesNoticia = require("../noticia/servicesNoticia")
 
 async function inserirUsuario(Usuario, contentType) {
     try {
@@ -203,10 +204,17 @@ async function buscarUsuario(idUsuario) {
 
             if(resultUsuario != false || typeof(resultUsuario) == 'object'){
                 if(resultUsuario.length > 0){
+                    let result = []
+        
+                    for(let user of resultUsuario){
+                        let resultNoticia = await servicesNoticia.buscarNoticiasPorUsuario(parseInt(user.id))
+                        user.noticias = resultNoticia.status_code === 200 ? resultNoticia.noticias : null
+                        result.push(user)
+                    }
                     let dadosUsuarios = {
                         "status": true,
                         "status_code": 201,
-                        "user": resultUsuario
+                        "user": result
                     }
                     return dadosUsuarios
                 }else{
