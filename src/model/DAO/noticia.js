@@ -1,21 +1,22 @@
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
-
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 // Inserir notícia
 async function insertNoticia(noticia) {
     try {
         console.log(noticia);
-        
+
         const novaNoticia = await prisma.tbl_noticia.create({
             data: {
                 titulo: noticia.titulo,
                 conteudo: noticia.conteudo,
-                data_postagem: new Date(noticia.data_postagem),
+                lon: noticia.lon,
+                lat: noticia.lat,
                 tbl_usuario_id: noticia.tbl_usuario_id,
-                tbl_endereco_id: noticia.tbl_endereco_id // Agora usa a FK para tbl_endereco
+                tbl_endereco_id: noticia.tbl_endereco_id
             }
-        })
+        });
+
         return novaNoticia;
     } catch (error) {
         console.error("Erro ao inserir notícia:", error);
@@ -33,11 +34,13 @@ async function updateNoticia(noticia) {
             data: {
                 titulo: noticia.titulo,
                 conteudo: noticia.conteudo,
-                data_postagem: noticia.data_postagem,
+                lon: noticia.lon,
+                lat: noticia.lat,
                 tbl_usuario_id: noticia.tbl_usuario_id,
-                tbl_endereco_id: noticia.tbl_endereco_id // Agora usa a FK para tbl_endereco
+                tbl_endereco_id: noticia.tbl_endereco_id
             }
         });
+
         return noticiaAtualizada;
     } catch (error) {
         console.error("Erro ao atualizar notícia:", error);
@@ -53,6 +56,7 @@ async function deleteNoticia(idNoticia) {
                 id: idNoticia
             }
         });
+
         return result ? true : false;
     } catch (error) {
         console.error("Erro ao deletar notícia:", error);
@@ -60,28 +64,39 @@ async function deleteNoticia(idNoticia) {
     }
 }
 
-
 // Buscar todas as notícias
 async function selectAllNoticias() {
     try {
-        let sql = 'SELECT * FROM tbl_noticia ORDER BY id DESC'
-        let result = await prisma.$queryRawUnsafe(sql)
-        return result ? result : false
+        const sql = 'SELECT * FROM tbl_noticia ORDER BY id DESC';
+        const result = await prisma.$queryRawUnsafe(sql);
+        return result ? result : false;
     } catch (error) {
-        console.log(error)
-        return false
+        console.error("Erro ao buscar todas as notícias:", error);
+        return false;
     }
 }
 
 // Buscar notícia por ID
 async function selectByIdNoticia(idNoticia) {
     try {
-        let sql = `SELECT * FROM tbl_noticia WHERE id = ${idNoticia}`
-        let result = await prisma.$queryRawUnsafe(sql)
-        return result ? result : false
+        const sql = `SELECT * FROM tbl_noticia WHERE id = ${idNoticia}`;
+        const result = await prisma.$queryRawUnsafe(sql);
+        return result ? result[0] : false;
     } catch (error) {
-        console.log(error)
-        return false
+        console.error("Erro ao buscar notícia por ID:", error);
+        return false;
+    }
+}
+
+// Buscar notícias por ID do usuário
+async function selectByUsuarioId(usuarioId) {
+    try {
+        const sql = `SELECT * FROM tbl_noticia WHERE tbl_usuario_id = ${usuarioId} ORDER BY id DESC`;
+        const result = await prisma.$queryRawUnsafe(sql);
+        return result ? result : false;
+    } catch (error) {
+        console.error("Erro ao buscar notícias por ID do usuário:", error);
+        return false;
     }
 }
 
@@ -90,5 +105,6 @@ module.exports = {
     updateNoticia,
     deleteNoticia,
     selectAllNoticias,
-    selectByIdNoticia
+    selectByIdNoticia,
+    selectByUsuarioId
 }
