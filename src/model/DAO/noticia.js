@@ -13,6 +13,7 @@ async function insertNoticia(noticia) {
                 lon: noticia.lon,
                 lat: noticia.lat,
                 tbl_usuario_id: noticia.tbl_usuario_id,
+                data_postagem: new Date (noticia.data_postagem),
                 tbl_endereco_id: noticia.tbl_endereco_id
             }
         });
@@ -43,8 +44,8 @@ async function updateNoticia(noticia) {
 
         return noticiaAtualizada;
     } catch (error) {
-        console.error("Erro ao atualizar notícia:", error);
-        return false;
+        console.error("Erro ao atualizar notícia:", error)
+        return false
     }
 }
 
@@ -81,7 +82,7 @@ async function selectByIdNoticia(idNoticia) {
     try {
         const sql = `SELECT * FROM tbl_noticia WHERE id = ${idNoticia}`;
         const result = await prisma.$queryRawUnsafe(sql);
-        return result ? result[0] : false;
+        return result ? result : false
     } catch (error) {
         console.error("Erro ao buscar notícia por ID:", error);
         return false;

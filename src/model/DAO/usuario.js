@@ -52,7 +52,7 @@ async function updateUsuario(Usuario){
                                         senha_hash = '${Usuario.senha_hash}',
                                         email = '${Usuario.email}',
                                         biografia = '${Usuario.biografia}',
-                                        data_nascimento = '${Usuario.data_nascimento}',
+                                        data_nascimento = '${Usuario.data_nascimento.split('T')[0]}',
                                         nome = '${Usuario.nome}',
                                         foto_perfil = '${Usuario.foto_perfil}'           
                                         

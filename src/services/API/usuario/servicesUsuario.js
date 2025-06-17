@@ -54,11 +54,11 @@ async function inserirUsuario(Usuario, contentType) {
 async function atualizarUsuario(Usuario, idUsuario, contentType) {
     try {
         if(contentType == "application/json"){
-            // console.log(Usuario)
+            console.log(Usuario)
             // console.log(CORRECTION.verificarAtributosUsuario(Usuario))
             // console.log(CORRECTION.CHECK_ID(idUsuario))
             // console.log((Usuario))
-            // console.log((idUsuario))
+            console.log((idUsuario))
             
             const { senha_salt, senha_hash } = encryptionFunction.hashPassword(Usuario.senha)
             Usuario.senha_salt = senha_salt
@@ -128,6 +128,8 @@ async function loginUsuario(loginData, contentType) {
             if (senhaValida) {
                 delete usuario.senha_salt
                 delete usuario.senha_hash
+                console.log(usuario);
+                
 
                 return {
                     ...MENSAGE.SUCCESS_LOGIN,
@@ -216,6 +218,8 @@ async function buscarUsuario(idUsuario) {
                         "status_code": 201,
                         "user": result
                     }
+                    // console.log(dadosUsuarios);
+                    
                     return dadosUsuarios
                 }else{
                     return MENSAGE.ERROR_NOT_FOUND

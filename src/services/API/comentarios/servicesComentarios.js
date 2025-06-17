@@ -148,14 +148,14 @@ async function buscarComentariosDeNoticia(idNoticia) {
                 const  resultComentarios = []
 
                 for(let comentario of result){                   
-                    let user =await servicesUsuario.buscarUsuario(comentario.tbl_usuario_id)
-                    // console.log(user.user[0]);
-                    if(user.user[0]){
-                        comentario.user = {
-                            nome: user.user[0].nome,
-                            foto_perfil: user.user[0].foto_perfil
-                        }
-                    }
+                    // let user = await servicesUsuario.buscarUsuario(comentario.tbl_usuario_id)
+                    // // console.log(user.user[0]);
+                    // if(user.user[0]){
+                    //     comentario.user = {
+                    //         nome: user.user[0].nome,
+                    //         foto_perfil: user.user[0].foto_perfil
+                    //     }
+                    // }
                     resultComentarios.push(comentario)
                 }
                 return {
